@@ -1,0 +1,52 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-elections-dev-33633-authRole",
+      "UnauthRoleArn": "arn:aws:iam::529064899164:role/amplify-elections-dev-33633-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::529064899164:role/amplify-elections-dev-33633-authRole",
+      "Region": "eu-west-2",
+      "DeploymentBucketName": "amplify-elections-dev-33633-deployment",
+      "UnauthRoleName": "amplify-elections-dev-33633-unauthRole",
+      "StackName": "amplify-elections-dev-33633",
+      "StackId": "arn:aws:cloudformation:eu-west-2:529064899164:stack/amplify-elections-dev-33633/b7d561d0-3bdd-11ee-ae3f-0a53c331a14e",
+      "AmplifyAppId": "dv0f79e4frlog",
+      "APIGatewayAuthURL": "https://s3.amazonaws.com/amplify-elections-dev-33633-deployment/amplify-cfn-templates/api/APIGatewayAuthStack.json"
+    },
+    "categories": {
+      "function": {
+        "getRecordById": {
+          "deploymentBucketName": "amplify-elections-dev-33633-deployment",
+          "s3Key": "amplify-builds/getRecordById-55624b536c644f326647-build.zip"
+        },
+        "createRecord": {
+          "deploymentBucketName": "amplify-elections-dev-33633-deployment",
+          "s3Key": "amplify-builds/createRecord-483270426e2f62505173-build.zip"
+        },
+        "getRecord": {
+          "deploymentBucketName": "amplify-elections-dev-33633-deployment",
+          "s3Key": "amplify-builds/getRecord-4a77456e426944656579-build.zip"
+        },
+        "signinFunction": {
+          "deploymentBucketName": "amplify-elections-dev-33633-deployment",
+          "s3Key": "amplify-builds/signinFunction-466e3662774a75354c61-build.zip"
+        },
+        "signupFunction": {
+          "deploymentBucketName": "amplify-elections-dev-33633-deployment",
+          "s3Key": "amplify-builds/signupFunction-4b4f667273705847392f-build.zip"
+        }
+      },
+      "auth": {
+        "elections": {}
+      },
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "dv0f79e4frlog",
+          "type": "manual"
+        }
+      },
+      "api": {
+        "electionsAPI": {}
+      }
+    }
+  }
+}

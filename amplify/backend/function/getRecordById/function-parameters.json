@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "function": {
+      "getRecord": [
+        "read"
+      ]
+    }
+  },
+  "lambdaLayers": []
+}

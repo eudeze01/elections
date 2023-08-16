@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "function": {
+      "getRecordById": [
+        "read"
+      ]
+    },
+    "auth": {
+      "elections": [
+        "read"
+      ]
+    },
+    "api": {
+      "electionsAPI": [
+        "read"
+      ]
+    }
+  },
+  "lambdaLayers": []
+}

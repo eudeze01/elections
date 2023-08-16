@@ -1,0 +1,87 @@
+{
+  "version": 1,
+  "paths": {
+    "/api/elections": {
+      "name": "/api/elections",
+      "lambdaFunction": "getRecordById",
+      "permissions": {
+        "setting": "private",
+        "auth": [
+          "read"
+        ]
+      }
+    },
+    "/api/pollingUnits": {
+      "name": "/api/pollingUnits",
+      "lambdaFunction": "getRecordById",
+      "permissions": {
+        "setting": "open"
+      }
+    },
+    "/api/resultForms": {
+      "name": "/api/resultForms",
+      "lambdaFunction": "createRecord",
+      "permissions": {
+        "setting": "private",
+        "auth": [
+          "create"
+        ]
+      }
+    },
+    "/api/signIn": {
+      "name": "/api/signIn",
+      "lambdaFunction": "getRecordById",
+      "permissions": {
+        "setting": "private",
+        "auth": [
+          "read"
+        ]
+      }
+    },
+    "/api/signUp": {
+      "name": "/api/signUp",
+      "lambdaFunction": "createRecord",
+      "permissions": {
+        "setting": "open"
+      }
+    },
+    "/api/result": {
+      "name": "/api/result",
+      "lambdaFunction": "getRecordById",
+      "permissions": {
+        "setting": "open"
+      }
+    },
+    "/api/home": {
+      "name": "/api/home",
+      "lambdaFunction": "getRecordById",
+      "permissions": {
+        "setting": "open"
+      }
+    },
+    "/api/staff": {
+      "name": "/api/staff",
+      "lambdaFunction": "getRecordById",
+      "permissions": {
+        "setting": "private",
+        "auth": [
+          "read"
+        ]
+      }
+    },
+    "/api/wards": {
+      "name": "/api/wards",
+      "lambdaFunction": "getRecordById",
+      "permissions": {
+        "setting": "open"
+      }
+    },
+    "/api/lgc": {
+      "name": "/api/lgc",
+      "lambdaFunction": "getRecordById",
+      "permissions": {
+        "setting": "open"
+      }
+    }
+  }
+}

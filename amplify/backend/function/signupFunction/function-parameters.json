@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "function": {
+      "createRecord": [
+        "create"
+      ]
+    },
+    "auth": {
+      "elections": [
+        "create"
+      ]
+    },
+    "api": {
+      "electionsAPI": [
+        "create"
+      ]
+    }
+  },
+  "lambdaLayers": []
+}
