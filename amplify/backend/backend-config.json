@@ -1,31 +1,36 @@
 {
-  "api": {
-    "electionsAPI": {
+  "auth": {
+    "electionapp731f1737": {
+      "customAuth": false,
       "dependsOn": [
         {
           "attributes": [
-            "Name",
-            "Arn"
+            "Arn",
+            "Name"
           ],
           "category": "function",
-          "resourceName": "getRecordById"
+          "resourceName": "electionapp731f1737CustomMessage",
+          "triggerProvider": "Cognito"
         },
         {
           "attributes": [
-            "Name",
-            "Arn"
+            "Arn",
+            "Name"
           ],
           "category": "function",
-          "resourceName": "createRecord"
+          "resourceName": "electionapp731f1737PostConfirmation",
+          "triggerProvider": "Cognito"
+        },
+        {
+          "attributes": [
+            "Arn",
+            "Name"
+          ],
+          "category": "function",
+          "resourceName": "electionapp731f1737PreSignup",
+          "triggerProvider": "Cognito"
         }
       ],
-      "providerPlugin": "awscloudformation",
-      "service": "API Gateway"
-    }
-  },
-  "auth": {
-    "elections": {
-      "dependsOn": [],
       "frontendAuthConfig": {
         "mfaConfiguration": "OFF",
         "mfaTypes": [
@@ -36,41 +41,41 @@
           "passwordPolicyMinLength": 8
         },
         "signupAttributes": [
-          "EMAIL"
+          "EMAIL",
+          "FAMILY_NAME",
+          "NAME",
+          "PHONE_NUMBER"
         ],
         "socialProviders": [],
-        "usernameAttributes": [],
+        "usernameAttributes": [
+          "EMAIL",
+          "PHONE_NUMBER"
+        ],
         "verificationMechanisms": [
           "EMAIL"
         ]
       },
       "providerPlugin": "awscloudformation",
-      "service": "Cognito",
-      "serviceType": "managed"
+      "service": "Cognito"
     }
   },
   "function": {
-    "createRecord": {
+    "electionapp731f1737CustomMessage": {
       "build": true,
-      "dependsOn": [
-        {
-          "attributes": [
-            "UserPoolId"
-          ],
-          "category": "auth",
-          "resourceName": "elections"
-        }
-      ],
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
-    "getRecord": {
+    "electionapp731f1737PostConfirmation": {
       "build": true,
-      "dependsOn": [],
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
-    "getRecordById": {
+    "electionapp731f1737PreSignup": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "electionapp9584a074": {
       "build": true,
       "dependsOn": [
         {
@@ -78,65 +83,28 @@
             "Name"
           ],
           "category": "function",
-          "resourceName": "getRecord"
-        }
-      ],
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda"
-    },
-    "signinFunction": {
-      "build": true,
-      "dependsOn": [
+          "resourceName": "electionapp731f1737CustomMessage"
+        },
         {
           "attributes": [
             "Name"
           ],
           "category": "function",
-          "resourceName": "getRecordById"
+          "resourceName": "electionapp731f1737PostConfirmation"
+        },
+        {
+          "attributes": [
+            "Name"
+          ],
+          "category": "function",
+          "resourceName": "electionapp731f1737PreSignup"
         },
         {
           "attributes": [
             "UserPoolId"
           ],
           "category": "auth",
-          "resourceName": "elections"
-        },
-        {
-          "attributes": [
-            "ApiName",
-            "ApiId"
-          ],
-          "category": "api",
-          "resourceName": "electionsAPI"
-        }
-      ],
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda"
-    },
-    "signupFunction": {
-      "build": true,
-      "dependsOn": [
-        {
-          "attributes": [
-            "Name"
-          ],
-          "category": "function",
-          "resourceName": "createRecord"
-        },
-        {
-          "attributes": [
-            "UserPoolId"
-          ],
-          "category": "auth",
-          "resourceName": "elections"
-        },
-        {
-          "attributes": [
-            "ApiName",
-            "ApiId"
-          ],
-          "category": "api",
-          "resourceName": "electionsAPI"
+          "resourceName": "electionapp731f1737"
         }
       ],
       "providerPlugin": "awscloudformation",
@@ -151,83 +119,107 @@
     }
   },
   "parameters": {
-    "AMPLIFY_function_createRecord_deploymentBucketName": {
+    "AMPLIFY_function_electionapp731f1737CustomMessage_EMAILMESSAGE": {
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "createRecord"
+          "resourceName": "electionapp731f1737CustomMessage"
         }
       ]
     },
-    "AMPLIFY_function_createRecord_s3Key": {
+    "AMPLIFY_function_electionapp731f1737CustomMessage_EMAILSUBJECT": {
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "createRecord"
+          "resourceName": "electionapp731f1737CustomMessage"
         }
       ]
     },
-    "AMPLIFY_function_getRecordById_deploymentBucketName": {
+    "AMPLIFY_function_electionapp731f1737CustomMessage_REDIRECTURL": {
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "getRecordById"
+          "resourceName": "electionapp731f1737CustomMessage"
         }
       ]
     },
-    "AMPLIFY_function_getRecordById_s3Key": {
+    "AMPLIFY_function_electionapp731f1737CustomMessage_deploymentBucketName": {
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "getRecordById"
+          "resourceName": "electionapp731f1737CustomMessage"
         }
       ]
     },
-    "AMPLIFY_function_getRecord_deploymentBucketName": {
+    "AMPLIFY_function_electionapp731f1737CustomMessage_s3Key": {
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "getRecord"
+          "resourceName": "electionapp731f1737CustomMessage"
         }
       ]
     },
-    "AMPLIFY_function_getRecord_s3Key": {
+    "AMPLIFY_function_electionapp731f1737PostConfirmation_GROUP": {
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "getRecord"
+          "resourceName": "electionapp731f1737PostConfirmation"
         }
       ]
     },
-    "AMPLIFY_function_signinFunction_deploymentBucketName": {
+    "AMPLIFY_function_electionapp731f1737PostConfirmation_deploymentBucketName": {
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "signinFunction"
+          "resourceName": "electionapp731f1737PostConfirmation"
         }
       ]
     },
-    "AMPLIFY_function_signinFunction_s3Key": {
+    "AMPLIFY_function_electionapp731f1737PostConfirmation_s3Key": {
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "signinFunction"
+          "resourceName": "electionapp731f1737PostConfirmation"
         }
       ]
     },
-    "AMPLIFY_function_signupFunction_deploymentBucketName": {
+    "AMPLIFY_function_electionapp731f1737PreSignup_DOMAINALLOWLIST": {
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "signupFunction"
+          "resourceName": "electionapp731f1737PreSignup"
         }
       ]
     },
-    "AMPLIFY_function_signupFunction_s3Key": {
+    "AMPLIFY_function_electionapp731f1737PreSignup_deploymentBucketName": {
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "signupFunction"
+          "resourceName": "electionapp731f1737PreSignup"
+        }
+      ]
+    },
+    "AMPLIFY_function_electionapp731f1737PreSignup_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "electionapp731f1737PreSignup"
+        }
+      ]
+    },
+    "AMPLIFY_function_electionapp9584a074_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "electionapp9584a074"
+        }
+      ]
+    },
+    "AMPLIFY_function_electionapp9584a074_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "electionapp9584a074"
         }
       ]
     },

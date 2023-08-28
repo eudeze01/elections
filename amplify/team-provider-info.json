@@ -1,51 +1,49 @@
 {
   "dev": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-elections-dev-33633-authRole",
-      "UnauthRoleArn": "arn:aws:iam::529064899164:role/amplify-elections-dev-33633-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::529064899164:role/amplify-elections-dev-33633-authRole",
+      "AuthRoleName": "amplify-electionapp-dev-231330-authRole",
+      "UnauthRoleArn": "arn:aws:iam::529064899164:role/amplify-electionapp-dev-231330-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::529064899164:role/amplify-electionapp-dev-231330-authRole",
       "Region": "eu-west-2",
-      "DeploymentBucketName": "amplify-elections-dev-33633-deployment",
-      "UnauthRoleName": "amplify-elections-dev-33633-unauthRole",
-      "StackName": "amplify-elections-dev-33633",
-      "StackId": "arn:aws:cloudformation:eu-west-2:529064899164:stack/amplify-elections-dev-33633/b7d561d0-3bdd-11ee-ae3f-0a53c331a14e",
-      "AmplifyAppId": "dv0f79e4frlog",
-      "APIGatewayAuthURL": "https://s3.amazonaws.com/amplify-elections-dev-33633-deployment/amplify-cfn-templates/api/APIGatewayAuthStack.json"
+      "DeploymentBucketName": "amplify-electionapp-dev-231330-deployment",
+      "UnauthRoleName": "amplify-electionapp-dev-231330-unauthRole",
+      "StackName": "amplify-electionapp-dev-231330",
+      "StackId": "arn:aws:cloudformation:eu-west-2:529064899164:stack/amplify-electionapp-dev-231330/cc354bf0-3fa6-11ee-b42d-066ca38273b8",
+      "AmplifyAppId": "d23bsqfefh1qt8",
+      "AuthTriggerTemplateURL": "https://s3.amazonaws.com/amplify-electionapp-dev-231330-deployment/amplify-cfn-templates/auth/auth-trigger-cloudformation-template.json"
     },
     "categories": {
-      "function": {
-        "getRecordById": {
-          "deploymentBucketName": "amplify-elections-dev-33633-deployment",
-          "s3Key": "amplify-builds/getRecordById-55624b536c644f326647-build.zip"
-        },
-        "createRecord": {
-          "deploymentBucketName": "amplify-elections-dev-33633-deployment",
-          "s3Key": "amplify-builds/createRecord-483270426e2f62505173-build.zip"
-        },
-        "getRecord": {
-          "deploymentBucketName": "amplify-elections-dev-33633-deployment",
-          "s3Key": "amplify-builds/getRecord-4a77456e426944656579-build.zip"
-        },
-        "signinFunction": {
-          "deploymentBucketName": "amplify-elections-dev-33633-deployment",
-          "s3Key": "amplify-builds/signinFunction-466e3662774a75354c61-build.zip"
-        },
-        "signupFunction": {
-          "deploymentBucketName": "amplify-elections-dev-33633-deployment",
-          "s3Key": "amplify-builds/signupFunction-4b4f667273705847392f-build.zip"
-        }
-      },
       "auth": {
-        "elections": {}
+        "electionapp731f1737": {}
+      },
+      "function": {
+        "electionapp731f1737CustomMessage": {
+          "REDIRECTURL": "/api/verify",
+          "EMAILSUBJECT": "\"Action Required: Confirm Your e-lections Account\"",
+          "EMAILMESSAGE": "Dear {Name},Thank you for registering with e-lec",
+          "deploymentBucketName": "amplify-electionapp-dev-231330-deployment",
+          "s3Key": "amplify-builds/electionapp731f1737CustomMessage-422b4a47703037584270-build.zip"
+        },
+        "electionapp731f1737PostConfirmation": {
+          "GROUP": "Guest",
+          "deploymentBucketName": "amplify-electionapp-dev-231330-deployment",
+          "s3Key": "amplify-builds/electionapp731f1737PostConfirmation-334a54514a4d2b33554f-build.zip"
+        },
+        "electionapp731f1737PreSignup": {
+          "DOMAINALLOWLIST": "'@agent.e-lections, @e-lections.live'",
+          "deploymentBucketName": "amplify-electionapp-dev-231330-deployment",
+          "s3Key": "amplify-builds/electionapp731f1737PreSignup-75583475366c67475638-build.zip"
+        },
+        "electionapp9584a074": {
+          "deploymentBucketName": "amplify-electionapp-dev-231330-deployment",
+          "s3Key": "amplify-builds/electionapp9584a074-66376d42664e547a7931-build.zip"
+        }
       },
       "hosting": {
         "amplifyhosting": {
-          "appId": "dv0f79e4frlog",
+          "appId": "d23bsqfefh1qt8",
           "type": "manual"
         }
-      },
-      "api": {
-        "electionsAPI": {}
       }
     }
   }

@@ -1,0 +1,33 @@
+{
+  "permissions": {
+    "function": {
+      "electionapp731f1737CustomMessage": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ],
+      "electionapp731f1737PostConfirmation": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ],
+      "electionapp731f1737PreSignup": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ]
+    },
+    "auth": {
+      "electionapp731f1737": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ]
+    }
+  },
+  "lambdaLayers": []
+}
