@@ -1,47 +1,33 @@
 {
   "dev": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-electionapp-dev-231330-authRole",
-      "UnauthRoleArn": "arn:aws:iam::529064899164:role/amplify-electionapp-dev-231330-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::529064899164:role/amplify-electionapp-dev-231330-authRole",
+      "AuthRoleName": "amplify-elive-dev-04103-authRole",
+      "UnauthRoleArn": "arn:aws:iam::529064899164:role/amplify-elive-dev-04103-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::529064899164:role/amplify-elive-dev-04103-authRole",
       "Region": "eu-west-2",
-      "DeploymentBucketName": "amplify-electionapp-dev-231330-deployment",
-      "UnauthRoleName": "amplify-electionapp-dev-231330-unauthRole",
-      "StackName": "amplify-electionapp-dev-231330",
-      "StackId": "arn:aws:cloudformation:eu-west-2:529064899164:stack/amplify-electionapp-dev-231330/cc354bf0-3fa6-11ee-b42d-066ca38273b8",
-      "AmplifyAppId": "d23bsqfefh1qt8",
-      "AuthTriggerTemplateURL": "https://s3.amazonaws.com/amplify-electionapp-dev-231330-deployment/amplify-cfn-templates/auth/auth-trigger-cloudformation-template.json"
+      "DeploymentBucketName": "amplify-elive-dev-04103-deployment",
+      "UnauthRoleName": "amplify-elive-dev-04103-unauthRole",
+      "StackName": "amplify-elive-dev-04103",
+      "StackId": "arn:aws:cloudformation:eu-west-2:529064899164:stack/amplify-elive-dev-04103/558f9070-5421-11ee-8a28-0a5cd06bed48",
+      "AmplifyAppId": "d39h2gkax6hqox",
+      "AuthTriggerTemplateURL": "https://s3.amazonaws.com/amplify-elive-dev-04103-deployment/amplify-cfn-templates/auth/auth-trigger-cloudformation-template.json"
     },
     "categories": {
       "auth": {
-        "electionapp731f1737": {}
+        "elivefe6a2e85": {}
       },
       "function": {
-        "electionapp731f1737CustomMessage": {
-          "REDIRECTURL": "/api/verify",
-          "EMAILSUBJECT": "\"Action Required: Confirm Your e-lections Account\"",
-          "EMAILMESSAGE": "Dear {Name},Thank you for registering with e-lec",
-          "deploymentBucketName": "amplify-electionapp-dev-231330-deployment",
-          "s3Key": "amplify-builds/electionapp731f1737CustomMessage-422b4a47703037584270-build.zip"
-        },
-        "electionapp731f1737PostConfirmation": {
-          "GROUP": "Guest",
-          "deploymentBucketName": "amplify-electionapp-dev-231330-deployment",
-          "s3Key": "amplify-builds/electionapp731f1737PostConfirmation-334a54514a4d2b33554f-build.zip"
-        },
-        "electionapp731f1737PreSignup": {
-          "DOMAINALLOWLIST": "'@agent.e-lections, @e-lections.live'",
-          "deploymentBucketName": "amplify-electionapp-dev-231330-deployment",
-          "s3Key": "amplify-builds/electionapp731f1737PreSignup-75583475366c67475638-build.zip"
-        },
-        "electionapp9584a074": {
-          "deploymentBucketName": "amplify-electionapp-dev-231330-deployment",
-          "s3Key": "amplify-builds/electionapp9584a074-66376d42664e547a7931-build.zip"
+        "elivefe6a2e85CustomMessage": {
+          "REDIRECTURL": "/resultForm",
+          "EMAILSUBJECT": "",
+          "EMAILMESSAGE": "",
+          "deploymentBucketName": "amplify-elive-dev-04103-deployment",
+          "s3Key": "amplify-builds/elivefe6a2e85CustomMessage-456a6c6d696a386e6130-build.zip"
         }
       },
       "hosting": {
         "amplifyhosting": {
-          "appId": "d23bsqfefh1qt8",
+          "appId": "d39h2gkax6hqox",
           "type": "manual"
         }
       }

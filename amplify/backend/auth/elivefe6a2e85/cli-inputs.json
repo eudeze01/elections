@@ -1,10 +1,10 @@
 {
   "version": "1",
   "cognitoConfig": {
-    "identityPoolName": "electionapp731f1737_identitypool_731f1737",
+    "identityPoolName": "elivefe6a2e85_identitypool_fe6a2e85",
     "allowUnauthenticatedIdentities": false,
-    "resourceNameTruncated": "electi731f1737",
-    "userPoolName": "electionapp731f1737_userpool_731f1737",
+    "resourceNameTruncated": "elivefe6a2e85",
+    "userPoolName": "elivefe6a2e85_userpool_fe6a2e85",
     "autoVerifiedAttributes": [
       "email"
     ],
@@ -34,10 +34,10 @@
     "userpoolClientReadAttributes": [
       "email"
     ],
-    "userpoolClientLambdaRole": "electi731f1737_userpoolclient_lambda_role",
+    "userpoolClientLambdaRole": "eliveffe6a2e85_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "sharedId": "731f1737",
-    "resourceName": "electionapp731f1737",
+    "sharedId": "fe6a2e85",
+    "resourceName": "elivefe6a2e85",
     "authSelections": "identityPoolAndUserPool",
     "useDefault": "default",
     "usernameAttributes": [
@@ -46,17 +46,11 @@
     "triggers": {
       "CustomMessage": [
         "verification-link"
-      ],
-      "PostConfirmation": [
-        "add-to-group"
-      ],
-      "PreSignup": [
-        "email-filter-allowlist"
       ]
     },
     "userPoolGroupList": [],
     "serviceName": "Cognito",
-    "verificationBucketName": "electionapp731f1737verificationbucket",
+    "verificationBucketName": "elivefe6a2e85verificationbucket",
     "usernameCaseSensitive": false,
     "useEnabledMfas": true
   }

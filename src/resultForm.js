@@ -1,57 +1,97 @@
-import React, { useEffect, useState } from 'react';
-import { TextField, Grid, Box, AppBar, Toolbar, IconButton, Typography, Button, Accordion, 
-  AccordionSummary, AccordionDetails, Checkbox } from '@mui/material';
+import React, { useState } from 'react';
+import { TextField, Grid, Box, Typography, Button, Accordion, 
+  AccordionSummary, AccordionDetails} from '@mui/material';
 import { Menu as MenuIcon, ExpandMore as ExpandMoreIcon } from '@mui/icons-material';
 
-const unitDetails = [
-  { key: 'state', title:'State', nameLabel: 'State Name', idLabel: 'State ID' },
-  { key: 'lga', title:'Local Government Area', nameLabel: 'LGA Name', idLabel: 'LGA ID' },
-  { key: 'ward', title:'Ward', nameLabel: 'Ward Name', idLabel: 'Ward ID' },
-  { key: 'pollingUnit', title:'Polling Unit', nameLabel: 'Polling Unit Name', idLabel: 'Polling Unit ID' },
+
+const enteredOtp = ""; 
+const endpointUrl = "";
+const setOtpModalOpen = (status) => {};
+
+const unitDetail = { key: 'unitName', unitLabel: 'Unit Detail', nameLabel: 'Unit Name', idLabel: 'Unit ID' };
+
+const ballotDetail = [
+  { key: 'registeredVoters', description: 'Registered Voters', wordLabel: 'Total Registered Voters in Words', figureLabel: 'Registered Voters (Fig)' },
+  { key: 'accreditedVoters', description: 'Accredited Voters', wordLabel: 'Total Accredited Voters in Words', figureLabel: 'Accredited Voters (Fig)' },
+  { key: 'issuedBallots', description: 'Issued Ballot Papers', wordLabel: 'Total Issued Ballot Papers in Words', figureLabel: 'Total Issued Ballots (Fig)' },
+  { key: 'usedBallots', description: 'Used Ballot Papers', wordLabel: 'Total Used Ballot Papers in Words', figureLabel: ' Total Used Ballots (Fig)' },
+  { key: 'unusedBallots', description: 'Unused Ballot Papers', wordLabel: 'Total Unused Ballot Papers in Words', figureLabel: 'Total Unused Ballots (Fig)' },
+  { key: 'spoiltBallots', description: 'Spoilt Ballot Papers', wordLabel: 'Total Spoilt Ballot Papers in Words', figureLabel: 'Total Spoilt Ballots (Fig)' },
+  { key: 'ballotRangeStart', description: 'Ballot Number (Start)', wordLabel: 'Ballot Serial Number Start in Words', figureLabel: 'Ballot S/N Start (Fig)' },
+  { key: 'ballotRangeEnd', description: 'Ballot Number (End)', wordLabel: 'Ballot Serial Number End in Words', figureLabel: 'Ballot S/N End (Fig)' },
+  { key: 'rejectedVotes', description: 'Rejected Votes', wordLabel: 'Total Rejected Votes in Words', figureLabel: 'Total Rejected Votes (Fig)' },
+  { key: 'validVotes', description: 'Valid Votes', wordLabel: 'Total Valid Votes in Words', figureLabel: 'Total Valid Votes (Fig)' },
+];
+  
+const voteDetail = [
+  { key: 'PA1', partyName: 'Alliance Party' },
+  { key: 'PC1', partyName: 'Congress Party' },
+  { key: 'PD1', partyName: 'Democratic Party' }
 ];
 
-const ballotDetailsConfig = [
-  { key: 'registeredVoters', title: 'Registered Voters', wordLabel: 'Total Registered Voters in Words', figureLabel: 'Registered Voters (Fig)' },
-  { key: 'accreditedVoters', title: 'Accredited Voters', wordLabel: 'Total Accredited Voters in Words', figureLabel: 'Accredited Voters (Fig)' },
-  { key: 'issuedBallots', title: 'Issued Ballot Papers', wordLabel: 'Total Issued Ballot Papers in Words', figureLabel: 'Total Issued Ballots (Fig)' },
-  { key: 'usedBallots', title: 'Used Ballot Papers', wordLabel: 'Total Used Ballot Papers in Words', figureLabel: ' Total Used Ballots (Fig)' },
-  { key: 'unusedBallots', title: 'Unused Ballot Papers', wordLabel: 'Total Unused Ballot Papers in Words', figureLabel: 'Total Unused Ballots (Fig)' },
-  { key: 'spoiltBallots', title: 'Spoilt Ballot Papers', wordLabel: 'Total Spoilt Ballot Papers in Words', figureLabel: 'Total Spoilt Ballots (Fig)' },
-  { key: 'ballotRangeStart', title: 'Ballot Number (Start)', wordLabel: 'Ballot Serial Number Start in Words', figureLabel: 'Ballot S/N Start (Fig)' },
-  { key: 'ballotRangeEnd', title: 'Ballot Number (End)', wordLabel: 'Ballot Serial Number End in Words', figureLabel: 'Ballot S/N End (Fig)' },
-  { key: 'rejectedVotes', title: 'Rejected Votes', wordLabel: 'Total Rejected Votes in Words', figureLabel: 'Total Rejected Votes (Fig)' },
-  { key: 'validVotes', title: 'Valid Votes', wordLabel: 'Total Valid Votes in Words', figureLabel: 'Total Valid Votes (Fig)' },
-];
-
-async function fetchStaffID() {
-  const staffResponse = await fetch(`/api/staff/`);
-  const staffData = await staffResponse.json();
-  return staffData.staffID;  // assuming the API returns an object with staffID as a key
-}
-
-async function fetchStaffPollingUnit(staffID) {
-  // Fetch the polling unit ID for the given staff ID from the 'posting' endpoint
-  const postingResponse = await fetch(`/api/posting/${staffID}`);
-  const postingData = await postingResponse.json();
-
-  // If there's no polling unit ID, return null or handle the error appropriately
-  if (!postingData.pollingUnitID) {
-      return null;
+function ResultForm(props) {
+  
+  const [isPreview, setIsPreview] = useState(false);
+  
+  const handlePreviewClick = () => {
+    setIsPreview(true);
   }
 
-  // Fetch the details of the polling unit from the 'unit' endpoint using the obtained polling unit ID
-  const unitResponse = await fetch(`/api/unit/${postingData.pollingUnitID}`);
-  const unitData = await unitResponse.json();
+  const handleBackClick = () => {
+    // Go back to the form
+    setIsPreview(false);
+  };
 
-  return unitData; // This should have all the details like state, lga, ward, and polling unit
-}
+  const handleSubmit = async (event) => {
+    event.preventDefault();
 
-function ResultForm() {
+   
+  }
+
+  // const handleOtpSubmit = async () => {
+
+  //       if (isValid) {
+  //           setOtpModalOpen(false);
+
+  //           const formData = {
+  //               unitData,
+  //               ballotData,
+  //               voteData,
+  //               staffData
+  //               // ... any other form fields ...
+  //           };
+            
+  //           const response = await fetch(endpointUrl, {
+  //               method: "POST",
+  //               headers: {
+  //                   "Content-Type": "application/json",
+  //               },
+  //               body: JSON.stringify(formData),
+  //           });
+  
+  //           if (!response.ok) {
+  //               throw new Error('Network response was not ok');
+  //           }
+  
+  //           const responseData = await response.json();
+  //           console.log('Data stored successfully:', responseData);
+  //           // Reset data after successful submission
+  //           setUnitData(unitData);
+  //           setBallotData(ballotData);
+  //           setVoteData(voteData);
+  //           setStaffData(staffData);
+  //       } else {
+  //           alert("Invalid OTP. Please try again.");
+  //       }
+  //   } catch (error) {
+  //     console.error("Error verifying OTP", error);
+  //   }
+  // }
+
+
   const [unitData, setUnitData] = useState({
-    state: { id: '', name: '' },
-    lga: { id: '', name: '' },
-    ward: { id: '', name: '' },
-    pollingUnit: { id: '', name: '' }
+    unitName: '',
+    unitID: ''
   });
 
   const [ballotData, setBallotData] = useState({
@@ -66,217 +106,137 @@ function ResultForm() {
     rejectedVotes: { word: '', figure: '' },
     validVotes: { word: '', figure: '' },
   });
-
-  const [votesData, setVotesData] = useState([
-    { partyName: 'Alliance Party', partyID: 'PB1', votesFig: '', votesWords: '', agentName: '', agentID: '', agentVerified: false },
-    { partyName: 'Congress Party', partyID: 'PC1', votesFig: '', votesWords: '', agentName: '', agentID: '', agentVerified: false },
-    { partyName: 'Democratic Party', partyID: 'PA1', votesFig: '', votesWords: '', agentName: '', agentID: '', agentVerified: false },
+  
+  const [voteData, setVoteData] = useState([
+    { key: 'PA1', votesFig: '', votesWords: '' },
+    { key: 'PC1', votesFig: '', votesWords: '' },
+    { key: 'PD1', votesFig: '', votesWords: '' }
   ]);
 
+  const [staffData, setStaffData] = useState({
+    staffName: '',
+    staffID: '',
+    electionDate: null
+  });
 
-  const updateBallotData = (key, field, value) => {
-    setBallotData(prevState => ({
-      ...prevState,
-      [key]: { ...prevState[key], [field]: value }
-    }));
+  const handleStaffInputChange = (field, value) => {
+    setStaffData(prevData => ({ ...prevData, [field]: value }));
   };
 
-  const updateVotesData = (index, field, value) => {
-    setVotesData(prevVotesData => {
-        const updatedVotesData = [...prevVotesData];
-        updatedVotesData[index][field] = value;
-        return updatedVotesData;
-    });
-  };
-
-  const [isFieldsDisabled, setIsFieldsDisabled] = useState(false);
-
-  useEffect(() => {
-    fetchStaffID().then(staffID => {
-      if (staffID) {
-        fetchStaffPollingUnit(staffID).then(data => {
-          if (data) {
-              setUnitData({
-                  state: { id: data.stateID, name: data.stateName },
-                  lga: { id: data.lgaID, name: data.lgaName },
-                  ward: { id: data.wardID, name: data.wardName },
-                  pollingUnit: { id: data.pollingUnitID, name: data.pollingUnitName }
-              });
-              setIsFieldsDisabled(true);
-          }
-        });
-      }
-    });
-  }, []);
-
-  function verifyOTP(otp) {
-    const VALID_OTP = "123456";  // This is a placeholder, replace with your actual OTP logic.
-    return otp === VALID_OTP;
-  }
-
-  function handleCheckboxClick(index, event) {
-    // Prevent the checkbox from being checked immediately
-    event.preventDefault();
-
-    // Prompt the user for the OTP
-    const enteredOTP = prompt("Enter the OTP sent to your email");
-
-    if (verifyOTP(enteredOTP)) {
-        setVotesData(prevVotesData => {
-            const updatedVotesData = [...prevVotesData];
-            updatedVotesData[index].agentVerified = true;
-            return updatedVotesData;
-        });
-    } else {
-        alert("Invalid OTP. Please try again.");
+  function handleInputChange(dataType, key, subKey, value) {
+    if (dataType === "unitData") {
+      setUnitData(prevState => ({
+        ...prevState,
+        [key]: value
+      }));
+    } else if (dataType === "ballotData") {
+      setBallotData(prev => ({
+        ...prev,
+        [key]: { ...prev[key], [subKey]: value }
+      }));
+    } else if (dataType === "voteData") {
+      setVoteData(prev => {
+        const newData = [...prev];
+        const itemIndex = newData.findIndex(item => item.key === key);
+        if (itemIndex !== -1) {
+          newData[itemIndex][subKey] = value;
+        }
+        return newData;
+      });
     }
   }
-
-  function UnitComponent({ entryKey, label, nameLabel, idLabel }) {
+  
+  function UnitComponent({ unitLabel, nameLabel, idLabel, nameData, idData, onChangeName, onChangeId }) {
     return (
-      <Box sx={{ display: 'flex', alignItems: 'flex-start', flexDirection: 'row' }}>
-        <Grid container spacing={3} alignItems="center">
-          <Grid item xs={12} sm={3} md={3}>
-            <Typography variant="h6" sx={{ margin: 2, fontWeight: 'bold' }}>{label}</Typography>
-          </Grid>
-          <Grid item xs={12} sm={4} md={6}>
-            <TextField 
-              fullWidth
-              variant="outlined"
-              label={nameLabel}
-              sx={{ marginBottom: 2 }}
-              value={unitData[entryKey].name}
-              disabled={isFieldsDisabled}
-            />
-          </Grid>
-          <Grid item xs={12} sm={4} md={3}>
-            <TextField 
-              fullWidth
-              variant="outlined"
-              label={idLabel}
-              sx={{ marginBottom: 2 }}
-              value={unitData[entryKey].id}
-              disabled={isFieldsDisabled}
-              />
-          </Grid>
+      <Grid container spacing={2} alignItems="center">
+        <Grid item xs={12} sm={4} md={3}>
+          <Typography variant="h6" sx={{ margin: 2, fontWeight: 'bold' }}>{unitLabel}</Typography>
         </Grid>
-      </Box>
+        <Grid item xs={12} sm={6} md={7}>
+          <TextField fullWidth variant="outlined" label={nameLabel} value={nameData} onChange={e => onChangeName(e.target.value)} sx={{ marginBottom: 2 }} />
+        </Grid>
+        <Grid item xs={12} sm={2} md={2}>
+            <TextField fullWidth variant="outlined" label={idLabel} value={idData} onChange={e => onChangeId(e.target.value)} sx={{ marginBottom: 2 }} />
+        </Grid>
+      </Grid>
     );
-  }
+}
 
-  function BallotDetailComponent({ detailKey, title, wordLabel, figureLabel }) {
+  function BallotComponent({ description, wordLabel, figureLabel, wordData, figureData, onWordChange, onFigureChange }) {
     return (
       <Box sx={{ display: 'flex', alignItems: 'flex-start', flexDirection: 'row' }}>
-        <Grid container spacing={2}>
-          <Grid item xs={12} sm={6} md={3}>
-            <Typography variant="h6" sx={{ marginRight: 2, marginTop: 2, fontWeight: 'bold' }}>{title}</Typography>
+        <Grid container spacing={4}>
+          <Grid item xs={12} sm={4} md={3}>
+            <Typography variant="h6" sx={{ marginTop: 2, fontWeight: 'bold' }}>{description}</Typography> 
           </Grid>
           <Grid item xs={12} sm={6} md={7}>
             <TextField
               fullWidth
               variant="outlined"
               label={wordLabel}
+              value={wordData}
+              onChange={e => onWordChange(e.target.value)}
               sx={{ marginBottom: 2 }}
-              value={ballotData[detailKey].word}
-              onChange={(e) => updateBallotData(detailKey, 'word', e.target.value)}
             />
           </Grid>
-          <Grid item xs={12} sm={6} md={2}>
+          <Grid item xs={12} sm={2} md={2}>
             <TextField
               fullWidth
               variant="outlined"
               label={figureLabel}
+              value={figureData}
+              onChange={e => onFigureChange(e.target.value)}
               sx={{ marginBottom: 2 }}
-              value={ballotData[detailKey].figure}
-              onChange={(e) => updateBallotData(detailKey, 'figure', e.target.value)}
             />
+          </Grid>
+          </Grid>
+      </Box>
+    );
+  }
+
+  function VoteComponent({ partyName, partyID, votesFig, votesWords, onInputChange }) {
+    return (
+      <Box sx={{ display: 'flex', alignItems: 'flex-start', flexDirection: 'row', marginBottom: 2 }}>
+        <Grid container spacing={1}>
+          <Grid item xs={12} sm={6} md={2}>
+            <Typography variant="h6" sx={{ marginTop: 2, fontWeight: 'bold' }}>{partyName}</Typography>
+          </Grid>
+          <Grid item xs={12} sm={6} md={1}>
+            <Typography variant="h6" sx={{ marginTop: 2, fontWeight: 'bold' }}>{partyID}</Typography>         
+          </Grid>
+          <Grid item xs={12} sm={6} md={2}>
+            <TextField fullWidth variant="outlined" label="Votes in Fig" value={votesFig} onChange={e => onInputChange('votesFig', e.target.value)} />
+          </Grid>
+          <Grid item xs={12} sm={6} md={7}>
+            <TextField fullWidth variant="outlined" label="Votes in Words" value={votesWords} onChange={e => onInputChange('votesWords', e.target.value)} />
           </Grid>
         </Grid>
       </Box>
     );
   }
 
-  function VotesDetailComponent({ detailKey, title, data, index, updateVotesData }) {
-    const { partyID, agentVerified } = data;
+  if (isPreview) {
     return (
-      <Box sx={{ display: 'flex', alignItems: 'flex-start', flexDirection: 'row', marginBottom: 2 }}>
-        <Grid container spacing={1}>
-          <Grid item xs={12} sm={6} md={2}>
-            <Typography variant="h6" sx={{ marginTop: 2, fontWeight: 'bold' }}>{title}</Typography>
-          </Grid>
-          <Grid item xs={12} sm={6} md={1}>
-            <Typography variant="h6" sx={{ marginTop: 2, fontWeight: 'bold' }}>{partyID}</Typography>
-          </Grid>
-          <Grid item xs={12} sm={6} md={2}>
-            <TextField 
-              fullWidth
-              variant="outlined"
-              label="Votes in Fig"
-              value={data.votesFig}
-              onChange={e => updateVotesData(index, 'votesFig', e.target.value)}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6} md={3.5}>
-            <TextField 
-              fullWidth
-              variant="outlined"
-              label="Votes in Words"
-              value={data.votesWords}
-              onChange={e => updateVotesData(index, 'votesWords', e.target.value)}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6} md={2}>
-            <TextField 
-              fullWidth
-              variant="outlined"
-              label="Agent Name"
-              value={data.agentName}
-              onChange={e => updateVotesData(index, 'agentName', e.target.value)}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6} md={1}>
-            <TextField 
-              fullWidth
-              variant="outlined"
-              label="Agent ID"
-              value={data.agentID}
-              onChange={e => updateVotesData(index, 'agentID', e.target.value)}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6} md={0.5} sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-            <Checkbox 
-              checked={agentVerified}
-              onChange={(e) => handleCheckboxClick(index, e)} 
-              sx={{ '& svg': { fontSize: '2.5rem' } }}  // adjust '2rem' to desired size
-            />
-        </Grid>
-      </Grid>
-    </Box>
-  );
-  }
+      <>
+        {/* Display your data, implement this based on your needs */}
+        <Box>{JSON.stringify(unitData)}</Box>
+        <Box>{JSON.stringify(ballotData)}</Box>
+        <Box>{JSON.stringify(voteData)}</Box>
+        <Box>{JSON.stringify(staffData)}</Box>
+
+        <Button variant="contained" color="secondary" onClick={handleBackClick}>
+          Back
+        </Button>
+
+        <Button variant="contained" color="primary" onClick={handleSubmit}>
+          Submit
+        </Button>
+      </>
+    );
+  } else {
 
   return (
     <>
-      <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static" sx={{ backgroundColor: 'green' }}>
-          <Toolbar>
-            <IconButton
-              size="large"
-              edge="start"
-              color="inherit"
-              aria-label="menu"
-              sx={{ mr: 2 }}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              E-lections
-            </Typography>
-            <Button color="inherit">Login</Button>
-          </Toolbar>
-        </AppBar>
-      </Box>
-
       <Box sx={{ m: 5, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <Typography variant="h4" gutterBottom sx={{ fontWeight: 'bold' }}>
           Unit Result Submission Form
@@ -284,113 +244,122 @@ function ResultForm() {
       </Box>
 
       <Box sx={{ m: 2 }}>
-        {unitDetails.map((detail) => (
-          <UnitComponent
-            key={detail.key}
-            entryKey={detail.key}
-            label={detail.title}
-            nameLabel={detail.nameLabel}
-            idLabel={detail.idLabel}
-          />
-        ))}
+        <UnitComponent
+          unitLabel={unitDetail.unitLabel} 
+          nameLabel={unitDetail.nameLabel}
+          idLabel={unitDetail.idLabel}
+          nameData={unitData.unitName}
+          idData={unitData.unitID}
+          onChangeName={value => handleInputChange("unitData", "unitName", null, value)}
+          onChangeId={value => handleInputChange("unitData", "unitID", null, value)}
+        />
+      </Box>
+
+
 
         <Accordion sx={{ marginBottom: 2 }}>
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
             <Typography variant="h5" sx={{ fontWeight: 'bold' }}>Expand Ballot Details</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            {ballotDetailsConfig.map((detail, index) => (
-              <BallotDetailComponent 
-                key={detail.key}
-                detailKey={detail.key}
-                title={`${index + 1}. ${detail.title}`}
-                wordLabel={detail.wordLabel}
-                figureLabel={detail.figureLabel}
-              />
-            ))}
+          {ballotDetail.map(detail => (
+            <BallotComponent
+              key={detail.key}
+              description={detail.description}
+              wordLabel={detail.wordLabel}
+              figureLabel={detail.figureLabel}
+              wordData={ballotData[detail.key].word}
+              figureData={ballotData[detail.key].figure}
+              onWordChange={(value) => handleInputChange("ballotData", detail.key, "word", value)}
+              onFigureChange={(value) => handleInputChange("ballotData", detail.key, "figure", value)}
+            />
+          ))}
           </AccordionDetails>
         </Accordion>
 
-        <Accordion sx={{ marginBottom: 2 }}> 
+        <Accordion sx={{ marginBottom: 2 }}>
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
             <Typography variant="h5" sx={{ fontWeight: 'bold' }}>Votes Summary</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            {votesData.map((partyData, index) => (
-              <VotesDetailComponent 
-              key={partyData.partyID} 
-              detailKey={`party${index}`}
-              title={partyData.partyName}
-              data={partyData}
-              index={index}
-              updateVotesData={updateVotesData}  
+          {voteDetail.map((detail, index) => (
+            <VoteComponent 
+              key={detail.key} 
+              partyName={detail.partyName}
+              partyID={detail.key}
+              votesFig={voteData[index].votesFig}
+              votesWords={voteData[index].votesWords}
+              onInputChange={(field, value) => handleInputChange("voteData", detail.key, field, value)}
             />
-            ))}
+          ))}
           </AccordionDetails>
         </Accordion>
+
+
+        <Box display="flex" flexDirection="column" alignItems="center" mt={3} m={2}>
+        <Grid container spacing={1} alignItems="center">
+            <Grid item xs={12} sm={1}>
+                <Box>I</Box>
+            </Grid>
+            <Grid item xs={12} sm={3}>
+                <Box mx={1}>
+                    <TextField 
+                        variant="outlined"
+                        name="staffName" 
+                        id="staffName" 
+                        label="Polling Officer's Name" 
+                        required 
+                    />
+                </Box>
+            </Grid>
+            <Grid item xs={12} sm={1}>
+                <Box>with staff ID</Box>
+            </Grid>
+            <Grid item xs={12} sm={3}>
+                <Box mx={1}>
+                    <TextField 
+                        variant="outlined"
+                        name="staffID" 
+                        id="staffID" 
+                        label="Staff ID" 
+                        required 
+                    />
+                </Box>
+            </Grid>
+            <Grid item xs={12} sm={1}>
+                <Box>today,</Box>
+            </Grid>
+            <Grid item xs={12} sm={3}>
+                <Box mx={1}>
+                    <TextField 
+                        variant="outlined"
+                        type="datetime-local" 
+                        name="electionDate" 
+                        id="electionDate" 
+                        label="Election Date" 
+                        InputLabelProps={{
+                          shrink: true,
+                        }}
+                        required 
+                    />
+                </Box>
+            </Grid>
+            <Grid item xs={12}>
+                <Box>hereby certify that the information contained in this form is a true and accurate account of votes cast in this polling unit. The election was CONTESTED/NOT CONTESTED.</Box>
+            </Grid>
+        </Grid>
+
+          <Box>
+            <Box m={3} >
+                <Button variant="contained" color="primary" onClick={handlePreviewClick}>
+                  Preview
+                </Button>
+            </Box>
+        </Box>
       </Box>
-
-      <Box display="flex" flexDirection="column" alignItems="center" mt={3} m={2}>
-    <Grid container spacing={2} alignItems="center">
-        <Grid item xs={12} sm={1}>
-            <Box>I</Box>
-        </Grid>
-        <Grid item xs={12} sm={3}>
-            <Box mx={1}>
-                <TextField 
-                    variant="outlined"
-                    name="staffName" 
-                    id="staffName" 
-                    label="Polling Officer's Name" 
-                    required 
-                />
-            </Box>
-        </Grid>
-        <Grid item xs={12} sm={1}>
-            <Box>with staff ID</Box>
-        </Grid>
-        <Grid item xs={12} sm={3}>
-            <Box mx={1}>
-                <TextField 
-                    variant="outlined"
-                    name="staffID" 
-                    id="staffID" 
-                    label="Staff ID" 
-                    required 
-                />
-            </Box>
-        </Grid>
-        <Grid item xs={12} sm={1}>
-            <Box>today,</Box>
-        </Grid>
-        <Grid item xs={12} sm={3}>
-            <Box mx={1}>
-                <TextField 
-                    variant="outlined"
-                    type="datetime-local" 
-                    name="electionDate" 
-                    id="electionDate" 
-                    label="Election Date" 
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                    required 
-                />
-            </Box>
-        </Grid>
-        <Grid item xs={12}>
-            <Box>hereby certifies that the information contained in this form is a true and accurate account of votes cast in this polling unit. The election was CONTESTED/NOT CONTESTED.</Box>
-        </Grid>
-    </Grid>
-
-    <Box mt={2} marginBottom={3}>
-        <Button variant="contained" color="primary" onClick={handleCheckboxClick}>
-            Certify
-        </Button>
-    </Box>
-</Box>
     </>
   );
-}
+}}
+
 
 export default ResultForm;

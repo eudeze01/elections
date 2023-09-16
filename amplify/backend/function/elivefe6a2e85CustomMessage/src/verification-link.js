@@ -8,6 +8,8 @@ exports.handler = async (event) => {
     const { region, userName } = event;
     const { clientId } = event.callerContext;
     const redirectUrl = `${process.env.REDIRECTURL}/?username=${userName}`;
+    console.log('REDIRECTURL: ', redirectUrl)
+    
     const resourcePrefix = process.env.RESOURCENAME.split('CustomMessage')[0];
 
     const hyphenRegions = [
@@ -33,6 +35,7 @@ exports.handler = async (event) => {
     ).toString('base64');
     // eslint-disable-next-line spellcheck/spell-checker
     const bucketUrl = `http://${resourcePrefix}verificationbucket-${process.env.ENV}.s3-website${separator}${region}.amazonaws.com`;
+    // const bucketUrl = 'http://localhost:3000'
     const url = `${bucketUrl}/?data=${payload}&code=${codeParameter}`;
     const message = `${process.env.EMAILMESSAGE}. \n ${url}`;
     event.response.smsMessage = message;

@@ -27,6 +27,7 @@ var spinner = new Spinner().spin(target);
 function confirm() {
   const urlParams = new URLSearchParams(window.location.search);
   const encoded = urlParams.get('data');
+  console.log('encoded', encoded)
   const code = urlParams.get('code');
   const decoded = JSON.parse(atob(encoded));
   const { userName, redirectUrl, clientId, region } = decoded;
