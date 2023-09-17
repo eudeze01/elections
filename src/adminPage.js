@@ -20,10 +20,9 @@ import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import ManageElection from './manageElection';
 import ManageStaff from './manageStaff';
-import ManageAgent from './manageAgent';
 import ManageParty from './manageParty';
 import ManageUnit from './manageUnit';
-import ManagePosting from './managePosting';
+import StaffPage from './staffPage';
 import ManageResultForm from './manageResultForm';
 import { SnackbarProvider } from './customBar';
 import ManageBallot from './manageBallot';
@@ -114,22 +113,22 @@ function AdminPage() {
                         <ManageStaff />
                     </SnackbarProvider>
                 );
-            case 'ManageAgent':
-                return (
-                    <SnackbarProvider>
-                        <ManageAgent />
-                    </SnackbarProvider>
-                );
+            // case 'ManageAgent':
+            //     return (
+            //         <SnackbarProvider>
+            //             <ManageAgent />
+            //         </SnackbarProvider>
+            //     );
             case 'ManageUnit':
                 return (
                     <SnackbarProvider>
                         <ManageUnit />
                     </SnackbarProvider>
                 );
-            case 'ManagePosting':
+            case 'StaffPage':
                     return (
                         <SnackbarProvider>
-                            <ManagePosting />
+                            <StaffPage />
                         </SnackbarProvider>
                     );
             case 'ManageBallot':
@@ -215,7 +214,7 @@ function AdminPage() {
                     { name: 'Manage Staff', component: 'ManageStaff' },
                     { name: 'Manage Agent', component: 'ManageAgent' },
                     { name: 'Manage Unit', component: 'ManageUnit' },
-                    { name: 'Manage Posting', component: 'ManagePosting' },
+                    { name: 'Staff Page', component: 'StaffPage' },
                     { name: 'Manage Ballot', component: 'ManageBallot' },
                     { name: 'Manage Result Form', component: 'ManageResultForm' },
                     { name: 'Manage Result', component: 'ManageResult' },
@@ -238,3 +237,4 @@ function AdminPage() {
 }
 
 export default AdminPage;
+

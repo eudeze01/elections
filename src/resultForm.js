@@ -279,26 +279,6 @@ function ResultForm(props) {
 
   return (
     <>
-      {/* <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static" sx={{ backgroundColor: 'green' }}>
-          <Toolbar>
-            <IconButton
-              size="large"
-              edge="start"
-              color="inherit"
-              aria-label="menu"
-              sx={{ mr: 2 }}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              E-lections
-            </Typography>
-            <Button color="inherit">Sign Out</Button>
-          </Toolbar>
-        </AppBar>
-      </Box> */}
-
       <Box sx={{ m: 5, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <Typography variant="h4" gutterBottom sx={{ fontWeight: 'bold' }}>
           Unit Result Submission Form
@@ -367,39 +347,43 @@ function ResultForm(props) {
           </AccordionDetails>
         </Accordion>
 
+        <Box>
+          <Box >
+            <Typography variant="h6" sx={{ margin: 2, fontWeight: 'bold' }}>Declaration</Typography>
+          </Box>
 
-        <Box display="flex" flexDirection="column" alignItems="center" mt={3} m={2}>
-        <Grid container spacing={1} alignItems="center">
+          <Box display="flex" flexDirection="column" alignItems="center" mt={3} m={2}>
+          <Grid container spacing={1} alignItems="center">
             <Grid item xs={12} sm={1}>
-                <Box>I</Box>
+              <Box>I</Box>
             </Grid>
             <Grid item xs={12} sm={3}>
-                <Box mx={1}>
-                    <TextField 
-                        variant="outlined"
-                        name="staffName" 
-                        id="staffName" 
-                        label="Polling Officer's Name" 
-                        required 
-                    />
-                </Box>
-            </Grid>
+              <Box mx={1}>
+                <TextField 
+                  variant="outlined"
+                  name="staffName" 
+                  id="staffName" 
+                  label="Polling Officer's Name" 
+                  required 
+                />
+              </Box>
+              </Grid>
             <Grid item xs={12} sm={1}>
-                <Box>with staff ID</Box>
+              <Box>with staff ID</Box>
             </Grid>
             <Grid item xs={12} sm={3}>
-                <Box mx={1}>
-                    <TextField 
-                        variant="outlined"
-                        name="staffID" 
-                        id="staffID" 
-                        label="Staff ID" 
-                        required 
-                    />
-                </Box>
+              <Box mx={1}>
+                <TextField 
+                  variant="outlined"
+                  name="staffID" 
+                  id="staffID" 
+                  label="Staff ID" 
+                  required 
+                />
+              </Box>
             </Grid>
             <Grid item xs={12} sm={1}>
-                <Box>today,</Box>
+              <Box>today,</Box>
             </Grid>
             <Grid item xs={12} sm={3}>
                 <Box mx={1}>
@@ -429,6 +413,7 @@ function ResultForm(props) {
             </Box>
         </Box>
       </Box>
+    </Box>
     </>
   );
 }}
