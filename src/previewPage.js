@@ -9,7 +9,8 @@ function PreviewPage() {
   
   const handleEditClick = () => {
     // Navigate back to the form page for editing
-    navigate('/form-page-route');  
+    navigate('/form-page-route');  // Replace '/form-page-route' with the correct route to your form page.
+  };
 
   const handleSubmit = async () => {
     // Retrieve the actual form data accordingly
@@ -91,8 +92,7 @@ function PreviewPage() {
             </Button>
         </Box>
       </Box>
-    );
-  }
+  );
 }
 
 export default PreviewPage;

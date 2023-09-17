@@ -9,7 +9,9 @@ const endpointUrl = "";
 const setOtpModalOpen = (status) => {};
 
 const unitDetail = { key: 'unitName', unitLabel: 'Unit Detail', nameLabel: 'Unit Name', idLabel: 'Unit ID' };
-
+const electionDetail = {key: 'electionName', electionLabel: 'Election', nameLabel: 'Election Name', idLabel: 'Election ID'}
+const staffDetail = { staffName: '', staffID: '' }
+const resultDetail = { }
 const ballotDetail = [
   { key: 'registeredVoters', description: 'Registered Voters', wordLabel: 'Total Registered Voters in Words', figureLabel: 'Registered Voters (Fig)' },
   { key: 'accreditedVoters', description: 'Accredited Voters', wordLabel: 'Total Accredited Voters in Words', figureLabel: 'Accredited Voters (Fig)' },
@@ -29,6 +31,7 @@ const voteDetail = [
   { key: 'PD1', partyName: 'Democratic Party' }
 ];
 
+
 function ResultForm(props) {
   
   const [isPreview, setIsPreview] = useState(false);
@@ -45,10 +48,19 @@ function ResultForm(props) {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-   
+    // try {
+    //     const user = await Auth.currentAuthenticatedUser();
+    //     await Auth.setupTOTP(user);
+    //     setOtpModalOpen(true);
+    // } catch (error) {
+    //     console.error("Error setting up TOTP", error);
+    // }
   }
 
   // const handleOtpSubmit = async () => {
+  //   try {
+  //       const user = await Auth.currentAuthenticatedUser();
+  //       const isValid = await Auth.verifyTotpToken(user, enteredOtp);
 
   //       if (isValid) {
   //           setOtpModalOpen(false);
@@ -94,6 +106,11 @@ function ResultForm(props) {
     unitID: ''
   });
 
+  const [electionData, setElectionData] = useState({
+    electionName: '',
+    electionID: ''
+  });
+
   const [ballotData, setBallotData] = useState({
     registeredVoters: { word: '', figure: '' },
     accreditedVoters: { word: '', figure: '' },
@@ -116,7 +133,6 @@ function ResultForm(props) {
   const [staffData, setStaffData] = useState({
     staffName: '',
     staffID: '',
-    electionDate: null
   });
 
   const handleStaffInputChange = (field, value) => {
@@ -126,6 +142,11 @@ function ResultForm(props) {
   function handleInputChange(dataType, key, subKey, value) {
     if (dataType === "unitData") {
       setUnitData(prevState => ({
+        ...prevState,
+        [key]: value
+      }));
+    } else if (dataType === "electionData") {
+      setElectionData(prevState => ({
         ...prevState,
         [key]: value
       }));
@@ -160,7 +181,24 @@ function ResultForm(props) {
         </Grid>
       </Grid>
     );
-}
+  }
+
+  function ElectionComponent({ electionLabel, nameLabel, idLabel, nameData, idData, onChangeName, onChangeId }) {
+    return (
+      <Grid container spacing={2} alignItems="center">
+        <Grid item xs={12} sm={4} md={3}>
+          <Typography variant="h6" sx={{ margin: 2, fontWeight: 'bold' }}>{electionLabel}</Typography>
+        </Grid>
+        <Grid item xs={12} sm={6} md={7}>
+          <TextField fullWidth variant="outlined" label={nameLabel} value={nameData} onChange={e => onChangeName(e.target.value)} sx={{ marginBottom: 2 }} />
+        </Grid>
+        <Grid item xs={12} sm={2} md={2}>
+          <TextField fullWidth variant="outlined" label={idLabel} value={idData} onChange={e => onChangeId(e.target.value)} sx={{ marginBottom: 2 }} />
+        </Grid>
+      </Grid>
+    );
+  }
+
 
   function BallotComponent({ description, wordLabel, figureLabel, wordData, figureData, onWordChange, onFigureChange }) {
     return (
@@ -215,6 +253,10 @@ function ResultForm(props) {
     );
   }
 
+  function StaffComponent ({nameLabel, idLabel, nameData, idData, onChangeName, onChangeId }) {
+
+  }
+
   if (isPreview) {
     return (
       <>
@@ -237,6 +279,26 @@ function ResultForm(props) {
 
   return (
     <>
+      {/* <Box sx={{ flexGrow: 1 }}>
+        <AppBar position="static" sx={{ backgroundColor: 'green' }}>
+          <Toolbar>
+            <IconButton
+              size="large"
+              edge="start"
+              color="inherit"
+              aria-label="menu"
+              sx={{ mr: 2 }}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+              E-lections
+            </Typography>
+            <Button color="inherit">Sign Out</Button>
+          </Toolbar>
+        </AppBar>
+      </Box> */}
+
       <Box sx={{ m: 5, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <Typography variant="h4" gutterBottom sx={{ fontWeight: 'bold' }}>
           Unit Result Submission Form
@@ -255,7 +317,17 @@ function ResultForm(props) {
         />
       </Box>
 
-
+      <Box sx={{ m: 2 }}>
+        <ElectionComponent
+          electionLabel={electionDetail.electionLabel} 
+          nameLabel={electionDetail.nameLabel}
+          idLabel={electionDetail.idLabel}
+          nameData={electionData.electionName}
+          idData={electionData.electionID}
+          onChangeName={value => handleInputChange("electionData", "electionName", null, value)}
+          onChangeId={value => handleInputChange("electionData", "electionID", null, value)}
+        />
+      </Box>
 
         <Accordion sx={{ marginBottom: 2 }}>
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
@@ -360,6 +432,5 @@ function ResultForm(props) {
     </>
   );
 }}
-
 
 export default ResultForm;
