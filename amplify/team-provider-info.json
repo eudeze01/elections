@@ -22,7 +22,7 @@
           "EMAILSUBJECT": "",
           "EMAILMESSAGE": "",
           "deploymentBucketName": "amplify-elive-dev-04103-deployment",
-          "s3Key": "amplify-builds/elivefe6a2e85CustomMessage-456a6c6d696a386e6130-build.zip"
+          "s3Key": "amplify-builds/elivefe6a2e85CustomMessage-34764972374f52623071-build.zip"
         }
       },
       "hosting": {

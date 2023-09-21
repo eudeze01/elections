@@ -4,11 +4,37 @@ import './index.css';
 import '@aws-amplify/ui-react/styles.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import NotFoundScreen from './screens/NotFound';
+import DashboardScreen from './screens/DashboardScreen';
+import AdminPage from './adminPage';
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <App/>,
+    errorElement: <NotFoundScreen/>
+  },
+  {
+    path: "dashboard",
+    element: <DashboardScreen/>,
+    children: [
+      {
+        path: "admin/:contactId",
+        element: <AdminPage />,
+      },
+    ],
+  },
+  {
+    path: "admin/:contactId",
+    element: <AdminPage />,
+  }
+]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <RouterProvider router={router} />
   </React.StrictMode>
 );
 

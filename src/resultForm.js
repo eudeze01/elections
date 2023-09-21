@@ -352,7 +352,7 @@ function ResultForm(props) {
             <Typography variant="h6" sx={{ margin: 2, fontWeight: 'bold' }}>Declaration</Typography>
           </Box>
 
-          <Box display="flex" flexDirection="column" alignItems="center" mt={3} m={2}>
+        <Box display="flex" flexDirection="column" alignItems="center" mt={3} m={2}>
           <Grid container spacing={1} alignItems="center">
             <Grid item xs={12} sm={1}>
               <Box>I</Box>
