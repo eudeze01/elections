@@ -1,10 +1,10 @@
-import { Typography, Button, Grid, FormControl, Input, InputAdornment, InputLabel, FormControlLabel, FormLabel, Radio, RadioGroup, Select, MenuItem } from "@mui/material";
-import "./App.css";
+import { Typography, Grid, FormControl, InputAdornment, FormControlLabel, FormLabel, Radio, RadioGroup, Select, MenuItem } from "@mui/material";
+import "../App.css";
 import React, { useState, useEffect } from 'react';
 import {
     PieChart, Pie, Cell,
     ComposedChart, BarChart, Bar, XAxis, YAxis,
-    CartesianGrid, Tooltip, Legend, Line, LabelList
+    CartesianGrid, Tooltip, Legend, Line, 
 } from "recharts";
 import SearchIcon from '@mui/icons-material/Search';
 import IconButton from '@mui/material/IconButton';
@@ -245,11 +245,7 @@ function HomeDashboard() {
 
                     {isSearchFormVisible && (
                         <FormControl variant="outlined" style={{ marginBottom: '20px' }}>
-                            <InputAdornment position="start">
-                                <button onClick={toggleSearchOptions} aria-label="Toggle search options">
-                                    Close
-                                </button>
-                            </InputAdornment>
+                            <InputAdornment position="start" />
                         </FormControl>
                     )}
                 </InputAdornment>

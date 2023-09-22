@@ -30,6 +30,8 @@ import ManageResult from './manageResult';
 import ManageVote from './manageVote';
 import HomeIcon from '@mui/icons-material/Home';
 import { useNavigate } from 'react-router-dom';
+import Button from '@mui/material/Button';
+
 
 const drawerWidth = 260;
 
