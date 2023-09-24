@@ -8,11 +8,12 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import NotFoundScreen from './screens/NotFound';
 import DashboardScreen from './screens/DashboardScreen';
 import AdminPage from './adminPage';
+import HomeScreen from './screens/HomeScreen';
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App/>,
+    element: <HomeScreen/>,
     errorElement: <NotFoundScreen/>
   },
   {

@@ -10,7 +10,6 @@ const apiKey = '6YJ1IDez4I3hpEsdqCAWI8fzF6CbtCINx3fRTxEf'
 let myHeaders = new Headers();
 myHeaders.append("Content-Type", "application/json");
 myHeaders.append("x-api-key", apiKey);
-let saved = false;
 
 const getUser = async (email) => {
   const myHeaders = new Headers();
