@@ -160,6 +160,15 @@ function AdminPage() {
         }
     };
 
+    function ActiveButton() {
+        const [isActive, setIsActive] = useState(false);
+
+        // Toggle the active state
+        const handleButtonClick = () => {
+            setIsActive(!isActive);
+        };
+
+    }
     return (
         <Box sx={{ display: 'flex' }}>
             <CssBaseline />
@@ -221,7 +230,13 @@ function AdminPage() {
                     { name: 'Manage Vote', component: 'ManageVote' },
                 ].map((item, index) => (
                     <ListItem key={item.name} disablePadding>
-                        <ListItemButton onClick={() => handleMenuClick(item.component)}>
+                        <ListItemButton 
+                            onClick={() => handleMenuClick(item.component)}
+                            style={{
+                                backgroundColor: selectedComponent === item.component ? '#e0e0e0' : 'transparent',
+                                fontWeight: selectedComponent === item.component ? 'bold' : 'normal'
+                            }}  // This will style the active button with a gray background and bold font
+                        >
                             <ListItemIcon>
                                 {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
                             </ListItemIcon>
@@ -237,4 +252,3 @@ function AdminPage() {
 }
 
 export default AdminPage;
-

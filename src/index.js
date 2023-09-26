@@ -9,6 +9,7 @@ import NotFoundScreen from './screens/NotFound';
 import DashboardScreen from './screens/DashboardScreen';
 import AdminPage from './adminPage';
 import HomeScreen from './screens/HomeScreen';
+import ResultTable from './table';
 
 const router = createBrowserRouter([
   {
@@ -19,16 +20,20 @@ const router = createBrowserRouter([
   {
     path: "dashboard",
     element: <DashboardScreen/>,
-    children: [
-      {
-        path: "admin/:contactId",
-        element: <AdminPage />,
-      },
-    ],
+    // children: [
+    //   {
+    //     path: "admin/:contactId",
+    //     element: <AdminPage />,
+    //   },
+    // ],
   },
   {
     path: "admin/:contactId",
     element: <AdminPage />,
+  },
+  {
+    path: "results/:resultId",
+    element: <ResultTable />,
   }
 ]);
 

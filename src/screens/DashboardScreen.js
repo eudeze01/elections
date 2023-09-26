@@ -11,6 +11,7 @@ let myHeaders = new Headers();
 myHeaders.append("Content-Type", "application/json");
 myHeaders.append("x-api-key", apiKey);
 
+const adminEmail = 'udeze.cc@gmail.com';
 const getUser = async (email) => {
   const myHeaders = new Headers();
   const myRequest = new Request(`https://9656mgkl5a.execute-api.eu-west-2.amazonaws.com/dev/account/${email}`, {
@@ -44,8 +45,9 @@ function AuthenticatedUser(props) {
           getUser(email)
           .then(async res => {
             const {email: id} = await res.json();
+            const accout_type = email == adminEmail ? 1 : 0
             // Save user to db
-            if (!id) submit({name, id: sub, phone_number, family_name, email});
+            if (!id) submit({name, id: sub, phone_number, family_name, email, accout_type});
           })
           .catch(error => console.log(`Get user error response: ${error}`))
         }

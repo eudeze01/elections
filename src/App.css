@@ -57,8 +57,17 @@
     display: flex;
     flex-direction: column;
     align-items: justify;
-    padding: 20px
+    padding: 50px;
+    padding-top: 10px;
 }
+
+.result-component {
+  display: 'flex'; 
+  align-items: 'flex-start'; 
+  flex-direction: 'row';
+  margin: 2 !important;
+}
+
 
 .form-control {
     margin-bottom: 20px;
@@ -159,7 +168,46 @@
 }
 
 .unit-header {
-    text-align: center;
-    font-weight: bold;
-    font-weight: bold !important;
+  text-align: center;
+  font-weight: bold !important;
 }
+
+ .resultform-header {
+  margin: 2.0em;
+  display: flex;
+  flex-direction: column; 
+  align-self: center;
+ }
+.component-typography {
+  margin: 2.0em; 
+  font-weight: bold !important;
+}
+
+.textfield-margin {
+  margin: 2;
+}
+
+.result-header-typo {
+  font-weight: bold !important;
+}
+
+.accordion-margin {
+   margin-bottom: 2;
+}
+
+.component-margin {
+  margin: 2;
+  align-content: center;
+}
+
+.declaration {
+  display: flex; 
+  flex-direction: column; 
+  align-items: center;
+}
+
+.result-input {
+  padding: 1.0em;
+  font-weight: bold !important;
+}
+
