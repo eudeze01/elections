@@ -18,16 +18,16 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
-import ManageElection from './manageElection';
-import ManageStaff from './manageStaff';
-import ManageParty from './manageParty';
-import ManageUnit from './manageUnit';
+// import ManageElection from './screens/admin/manageElection';
+// import ManageStaff from './screens/admin/manageStaff'
+// import ManageParty from './screens/admin/manageParty'
+// import ManageUnit from './screens/admin/manageUnit';
 import StaffPage from './staffPage';
-import ManageResultForm from './manageResultForm';
+// import ManageResultForm from './screens/admin/manageResultForm';
 import { SnackbarProvider } from './customBar';
-import ManageBallot from './manageBallot';
-import ManageResult from './manageResult';
-import ManageVote from './manageVote';
+// import ManageBallot from './screens/admin/manageBallot';
+// import ManageResult from './screens/admin/manageResult';
+// import ManageVote from './screens/admin/manageVote';
 
 const drawerWidth = 260;
 
@@ -95,66 +95,66 @@ function AdminPage() {
 
     const renderSelectedComponent = () => {
         switch (selectedComponent) {
-            case 'ManageElection':
-                return (
-                    <SnackbarProvider>
-                        <ManageElection />
-                    </SnackbarProvider>
-                );
-            case 'ManageParty':
-                return (
-                    <SnackbarProvider>
-                        <ManageParty />
-                    </SnackbarProvider>
-                );
-            case 'ManageStaff':
-                return (
-                    <SnackbarProvider>
-                        <ManageStaff />
-                    </SnackbarProvider>
-                );
+            // case 'ManageElection':
+            //     return (
+            //         <SnackbarProvider>
+            //             <ManageElection />
+            //         </SnackbarProvider>
+            //     );
+            // case 'ManageParty':
+            //     return (
+            //         <SnackbarProvider>
+            //             <ManageParty />
+            //         </SnackbarProvider>
+            //     );
+            // case 'ManageStaff':
+            //     return (
+            //         <SnackbarProvider>
+            //             <ManageStaff />
+            //         </SnackbarProvider>
+            //     );
             // case 'ManageAgent':
             //     return (
             //         <SnackbarProvider>
             //             <ManageAgent />
             //         </SnackbarProvider>
             //     );
-            case 'ManageUnit':
-                return (
-                    <SnackbarProvider>
-                        <ManageUnit />
-                    </SnackbarProvider>
-                );
+            // case 'ManageUnit':
+            //     return (
+            //         <SnackbarProvider>
+            //             <ManageUnit />
+            //         </SnackbarProvider>
+            //     );
             case 'StaffPage':
                     return (
                         <SnackbarProvider>
                             <StaffPage />
                         </SnackbarProvider>
                     );
-            case 'ManageBallot':
-                return (
-                    <SnackbarProvider>
-                        <ManageBallot />
-                    </SnackbarProvider>
-                );
-            case 'ManageResultForm':
-                    return (
-                        <SnackbarProvider>
-                            <ManageResultForm />
-                        </SnackbarProvider>
-                    );
-            case 'ManageResult':
-                    return (
-                        <SnackbarProvider>
-                            <ManageResult />
-                        </SnackbarProvider>
-                    );
-            case 'ManageVote':
-                    return (
-                        <SnackbarProvider>
-                            <ManageVote />
-                        </SnackbarProvider>
-                    );
+            // case 'ManageBallot':
+            //     return (
+            //         <SnackbarProvider>
+            //             <ManageBallot />
+            //         </SnackbarProvider>
+            //     );
+            // case 'ManageResultForm':
+            //         return (
+            //             <SnackbarProvider>
+            //                 <ManageResultForm />
+            //             </SnackbarProvider>
+            //         );
+            // case 'ManageResult':
+            //         return (
+            //             <SnackbarProvider>
+            //                 <ManageResult />
+            //             </SnackbarProvider>
+            //         );
+            // case 'ManageVote':
+            //         return (
+            //             <SnackbarProvider>
+            //                 <ManageVote />
+            //             </SnackbarProvider>
+            //         );
             default:
                 return null;  
         }
@@ -219,16 +219,16 @@ function AdminPage() {
                 <Divider />
                 <List>
                 {[
-                    { name: 'Manage Election', component: 'ManageElection' },
-                    { name: 'Manage Party', component: 'ManageParty' },
-                    { name: 'Manage Staff', component: 'ManageStaff' },
-                    { name: 'Manage Agent', component: 'ManageAgent' },
-                    { name: 'Manage Unit', component: 'ManageUnit' },
-                    { name: 'Staff Page', component: 'StaffPage' },
-                    { name: 'Manage Ballot', component: 'ManageBallot' },
-                    { name: 'Manage Result Form', component: 'ManageResultForm' },
-                    { name: 'Manage Result', component: 'ManageResult' },
-                    { name: 'Manage Vote', component: 'ManageVote' },
+                    // { name: 'Manage Election', component: 'ManageElection' },
+                    // { name: 'Manage Party', component: 'ManageParty' },
+                    // { name: 'Manage Staff', component: 'ManageStaff' },
+                    // { name: 'Manage Agent', component: 'ManageAgent' },
+                    // { name: 'Manage Unit', component: 'ManageUnit' },
+                    // { name: 'Staff Page', component: 'StaffPage' },
+                    // { name: 'Manage Ballot', component: 'ManageBallot' },
+                    // { name: 'Manage Result Form', component: 'ManageResultForm' },
+                    // { name: 'Manage Result', component: 'ManageResult' },
+                    // { name: 'Manage Vote', component: 'ManageVote' },
                 ].map((item, index) => (
                     <ListItem key={item.name} disablePadding>
                         <ListItemButton 

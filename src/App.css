@@ -176,7 +176,7 @@
   margin: 1.0em;
   display: flex;
   flex-direction: column; 
-  align-self: center;
+  align-content: center;
  }
 .component-typography {
   margin: 2.0em; 

@@ -326,8 +326,8 @@ function ResultForm() {
             <Grid item xs={4} md={4} sm={4} mb={2}>
                 <TextField id="partyVotes" fullWidth className="party-input" label="Party 4 Votes" variant="outlined" value={partyVotes4} onChange={e => setPartyVotes4(e.target.value)} />
             </Grid>
+          </Grid>
         </Grid>
-      </Grid>
 
         <Button style={previewButton} onClick={handlePreviewClick}>
           Preview

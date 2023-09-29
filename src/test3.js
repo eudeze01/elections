@@ -19,8 +19,14 @@ function AllResultsTable(props) {
         "electionLga": "LGA",
         "electionState": "State",
         "electionFederal": "Country",
-        "electionVotes.voteTotal": "Total Votes",
+        "electionVotes.voteTotal": "Total Votes",        
     };
+
+    const additionalAttributes = Array.isArray(props.data.keys) ? props.data.keys : [];
+    additionalAttributes.forEach(attribute => {
+        const [key, category] = attribute.split('_');
+        attributeToLabelMapping[attribute] = `${category.replace('election', '').replace(/([A-Z])/g, ' $1')} Result ID`;
+    });
 
     const parties = props.data.electionVotes && props.data.electionVotes.votesParties 
     ? props.data.electionVotes.votesParties.map(party => {
@@ -33,6 +39,7 @@ function AllResultsTable(props) {
         
     const rows = [
         "electionResultKey",
+        ...additionalAttributes,
         "electionId",
         "electionPollingCentre",
         "electionOfficerId",
@@ -191,11 +198,55 @@ class Home extends React.Component {
     }
 }
 
+// fetchDataForUnit(unit) {
+//     const relatedData = this.state.results.find(result => result[this.state.activeCategory] === unit);
+    
+//     if (relatedData) {
+//         this.setState({ data: relatedData });
+//     } else {
+//         this.setState({ data: {} });
+//     }
+// }
+
 fetchDataForUnit(unit) {
     const relatedData = this.state.results.find(result => result[this.state.activeCategory] === unit);
     
     if (relatedData) {
-        this.setState({ data: relatedData });
+        const data = { ...relatedData, keys: {} };
+
+        if (this.state.activeCategory === 'electionState') {
+            const lgaData = this.state.results.find(result => result.electionLga === relatedData.electionLga);
+            const wardData = this.state.results.find(result => result.electionWard === relatedData.electionWard);
+            const pollingCentreData = this.state.results.find(result => result.electionPollingCentre === relatedData.electionPollingCentre);
+            
+            data.keys = {
+                [`electionResultKey_${lgaData.electionLga}`]: lgaData ? lgaData.electionResultKey : null,
+                [`electionResultKey_${wardData.electionWard}`]: wardData ? wardData.electionResultKey : null,
+                [`electionResultKey_${pollingCentreData.electionPollingCentre}`]: pollingCentreData ? pollingCentreData.electionResultKey : null
+            };
+        }
+
+        if (this.state.activeCategory === 'electionLGA') {
+            const wardData = this.state.results.find(result => result.electionWard === relatedData.electionWard);
+            const pollingCentreData = this.state.results.find(result => result.electionPollingCentre === relatedData.electionPollingCentre);
+
+            data.keys = {
+                [`electionResultKey_${wardData.electionWard}`]: wardData ? wardData.electionResultKey : null,
+                [`electionResultKey_${pollingCentreData.electionPollingCentre}`]: pollingCentreData ? pollingCentreData.electionResultKey : null
+            };
+        }
+
+        if (this.state.activeCategory === 'electionWard') {
+            const pollingCentreData = this.state.results.find(result => result.electionPollingCentre === relatedData.electionPollingCentre);
+            
+            data.keys = {
+                [`electionResultKey_${pollingCentreData.electionPollingCentre}`]: pollingCentreData ? pollingCentreData.electionResultKey : null
+            };
+        }
+
+        // No need to add additional keys for electionPollingCentre as it's the lowest hierarchy
+
+        this.setState({ data });
     } else {
         this.setState({ data: {} });
     }
