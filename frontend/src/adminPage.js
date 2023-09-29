@@ -1,4 +1,4 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
@@ -28,10 +28,6 @@ import { SnackbarProvider } from './customBar';
 import ManageBallot from './manageBallot';
 import ManageResult from './manageResult';
 import ManageVote from './manageVote';
-import HomeIcon from '@mui/icons-material/Home';
-import { useNavigate } from 'react-router-dom';
-import Button from '@mui/material/Button';
-
 
 const drawerWidth = 260;
 
@@ -79,10 +75,9 @@ const DrawerHeader = styled('div')(({ theme }) => ({
     justifyContent: 'flex-start',
 }));
 
-function AdminPage({ signOut, user = {} }) {   
+function AdminPage() {   
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
-    const navigate = useNavigate();
 
     const handleDrawerOpen = () => {
     setOpen(true);
@@ -96,7 +91,7 @@ function AdminPage({ signOut, user = {} }) {
 
     const handleMenuClick = (componentName) => {
         setSelectedComponent(componentName);
-    };    
+    };
 
     const renderSelectedComponent = () => {
         switch (selectedComponent) {
@@ -165,41 +160,26 @@ function AdminPage({ signOut, user = {} }) {
         }
     };
 
+    function ActiveButton() {
+        const [isActive, setIsActive] = useState(false);
+
+        // Toggle the active state
+        const handleButtonClick = () => {
+            setIsActive(!isActive);
+        };
+
+    }
     return (
         <Box sx={{ display: 'flex' }}>
             <CssBaseline />
             <AppBar position="fixed" open={open} sx={{ bgcolor: 'green' }}>
                 <Toolbar>
-                    <IconButton
-                        size="large"
-                        edge="start"
-                        color="inherit"
-                        aria-label="back"
-                        sx={{ mr: 2 }}
-                        // onClick={() => navigate(-1)}
-                        >
-                        <ChevronLeftIcon />
-                        </IconButton>
-
-                        <IconButton
-                            size="large"
-                            edge="start"
-                            color="inherit"
-                            aria-label="home"
-                            sx={{ mr: 2 }}
-                            onClick={() => navigate('/home')}  
-                        >
-                            <HomeIcon />  
-                        </IconButton>
-
+                <a style={{textDecoration: "none", color: "white", marginRight: "20px"}} href="/"><Typography variant="h6">Home</Typography></a>
                     <Typography variant="h6" noWrap sx={{ flexGrow: 1 }} component="div">
-                        E-lections AdminPage
-                    </Typography>
-                    <Typography variant="subtitle1" component="span" sx={{ marginRight: 2 }}>
-                        {user?.attributes?.name} 
+                         AdminPage
                     </Typography>
                     <IconButton
-                        color="inherit" 
+                        color="inherit" // changed to inherit so it takes color from parent AppBar
                         aria-label="open drawer"
                         edge="start"
                         onClick={handleDrawerOpen}
@@ -251,7 +231,13 @@ function AdminPage({ signOut, user = {} }) {
                     { name: 'Manage Vote', component: 'ManageVote' },
                 ].map((item, index) => (
                     <ListItem key={item.name} disablePadding>
-                        <ListItemButton onClick={() => handleMenuClick(item.component)}>
+                        <ListItemButton 
+                            onClick={() => handleMenuClick(item.component)}
+                            style={{
+                                backgroundColor: selectedComponent === item.component ? '#e0e0e0' : 'transparent',
+                                fontWeight: selectedComponent === item.component ? 'bold' : 'normal'
+                            }}  // This will style the active button with a gray background and bold font
+                        >
                             <ListItemIcon>
                                 {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
                             </ListItemIcon>
@@ -260,8 +246,6 @@ function AdminPage({ signOut, user = {} }) {
                     </ListItem>
                 ))}
             </List>
-            <Divider />
-            <button textTransform='none' textDecoration="none" onClick={signOut} color="inherit">Sign Out</button>
         </Drawer>
     </Box>
     </Box>

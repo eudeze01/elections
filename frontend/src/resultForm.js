@@ -1,421 +1,357 @@
-import React, { useState } from 'react';
-import { TextField, Grid, Box, Typography, Button, Accordion, 
-  AccordionSummary, AccordionDetails} from '@mui/material';
-import { Menu as MenuIcon, ExpandMore as ExpandMoreIcon } from '@mui/icons-material';
+import React, { useState } from 'react'; 
+import {Grid, Button, Typography, TextField, Box, Table, TableBody, TableRow, TableCell }  from '@mui/material';
+import './App.css';
+import ResultTable from './table';
 
+const saveResult = async (body = {}, admin) => {
+  const myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
 
-const enteredOtp = ""; 
-const endpointUrl = "";
-const setOtpModalOpen = (status) => {};
+  const myRequest = new Request(`https://9656mgkl5a.execute-api.eu-west-2.amazonaws.com/dev/create/document/ElectionResults`, {
+    body: JSON.stringify(body),
+    method: "POST",
+    headers: myHeaders,
+    mode: "cors",
+    cache: "default",
+  });
+  return await fetch(myRequest);
+} 
 
-const unitDetail = { key: 'unitName', unitLabel: 'Unit Detail', nameLabel: 'Unit Name', idLabel: 'Unit ID' };
-const electionDetail = {key: 'electionName', electionLabel: 'Election', nameLabel: 'Election Name', idLabel: 'Election ID'}
-const staffDetail = { staffName: '', staffID: '' }
-const resultDetail = { }
-const ballotDetail = [
-  { key: 'registeredVoters', description: 'Registered Voters', wordLabel: 'Total Registered Voters in Words', figureLabel: 'Registered Voters (Fig)' },
-  { key: 'accreditedVoters', description: 'Accredited Voters', wordLabel: 'Total Accredited Voters in Words', figureLabel: 'Accredited Voters (Fig)' },
-  { key: 'issuedBallots', description: 'Issued Ballot Papers', wordLabel: 'Total Issued Ballot Papers in Words', figureLabel: 'Total Issued Ballots (Fig)' },
-  { key: 'usedBallots', description: 'Used Ballot Papers', wordLabel: 'Total Used Ballot Papers in Words', figureLabel: ' Total Used Ballots (Fig)' },
-  { key: 'unusedBallots', description: 'Unused Ballot Papers', wordLabel: 'Total Unused Ballot Papers in Words', figureLabel: 'Total Unused Ballots (Fig)' },
-  { key: 'spoiltBallots', description: 'Spoilt Ballot Papers', wordLabel: 'Total Spoilt Ballot Papers in Words', figureLabel: 'Total Spoilt Ballots (Fig)' },
-  { key: 'ballotRangeStart', description: 'Ballot Number (Start)', wordLabel: 'Ballot Serial Number Start in Words', figureLabel: 'Ballot S/N Start (Fig)' },
-  { key: 'ballotRangeEnd', description: 'Ballot Number (End)', wordLabel: 'Ballot Serial Number End in Words', figureLabel: 'Ballot S/N End (Fig)' },
-  { key: 'rejectedVotes', description: 'Rejected Votes', wordLabel: 'Total Rejected Votes in Words', figureLabel: 'Total Rejected Votes (Fig)' },
-  { key: 'validVotes', description: 'Valid Votes', wordLabel: 'Total Valid Votes in Words', figureLabel: 'Total Valid Votes (Fig)' },
-];
-  
-const voteDetail = [
-  { key: 'PA1', partyName: 'Alliance Party' },
-  { key: 'PC1', partyName: 'Congress Party' },
-  { key: 'PD1', partyName: 'Democratic Party' }
-];
+function ResultForm() {
+  const [electionPollingCentre, setPollingCentre] = useState('');
+  const [electionOfficerId, setOfficerID] = useState('');
+  const [electionId, setElectionID] = useState('');
+  const [electionDate, setElectionDate] = useState('');
+  const [electionWard, setElectionWard] = useState('');
+  const [electionLga, setElectionLga] = useState('');
+  const [electionState, setElectionState] = useState('');
+  const [electionFederal, setElectionFederal] = useState('');
 
-
-function ResultForm(props) {
+  const [partyVotes1, setPartyVotes1] = useState('');
+  const [partyName1, setPartyName1] = useState('');
+  const [partyVotes2, setPartyVotes2] = useState('');
+  const [partyName2, setPartyName2] = useState('');
+  const [partyVotes3, setPartyVotes3] = useState('');
+  const [partyName3, setPartyName3] = useState('');
+  const [partyVotes4, setPartyVotes4] = useState('');
+  const [partyName4, setPartyName4] = useState('');
   
   const [isPreview, setIsPreview] = useState(false);
+  const [isTableView, setIsTableView] = useState(false);
+  const [results, setResults] = useState({});
   
   const handlePreviewClick = () => {
     setIsPreview(true);
   }
 
   const handleBackClick = () => {
-    // Go back to the form
     setIsPreview(false);
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    if (!electionPollingCentre) return;
+    if (!electionOfficerId) return;
+    if (!electionId) return;
+    if (!electionDate) return;
+    if (!electionWard) return;
+    if (!electionLga) return;
+    if (!electionState) return;
+    if (!electionFederal) return;
 
-    // try {
-    //     const user = await Auth.currentAuthenticatedUser();
-    //     await Auth.setupTOTP(user);
-    //     setOtpModalOpen(true);
-    // } catch (error) {
-    //     console.error("Error setting up TOTP", error);
-    // }
-  }
-
-  // const handleOtpSubmit = async () => {
-  //   try {
-  //       const user = await Auth.currentAuthenticatedUser();
-  //       const isValid = await Auth.verifyTotpToken(user, enteredOtp);
-
-  //       if (isValid) {
-  //           setOtpModalOpen(false);
-
-  //           const formData = {
-  //               unitData,
-  //               ballotData,
-  //               voteData,
-  //               staffData
-  //               // ... any other form fields ...
-  //           };
-            
-  //           const response = await fetch(endpointUrl, {
-  //               method: "POST",
-  //               headers: {
-  //                   "Content-Type": "application/json",
-  //               },
-  //               body: JSON.stringify(formData),
-  //           });
-  
-  //           if (!response.ok) {
-  //               throw new Error('Network response was not ok');
-  //           }
-  
-  //           const responseData = await response.json();
-  //           console.log('Data stored successfully:', responseData);
-  //           // Reset data after successful submission
-  //           setUnitData(unitData);
-  //           setBallotData(ballotData);
-  //           setVoteData(voteData);
-  //           setStaffData(staffData);
-  //       } else {
-  //           alert("Invalid OTP. Please try again.");
-  //       }
-  //   } catch (error) {
-  //     console.error("Error verifying OTP", error);
-  //   }
-  // }
-
-
-  const [unitData, setUnitData] = useState({
-    unitName: '',
-    unitID: ''
-  });
-
-  const [electionData, setElectionData] = useState({
-    electionName: '',
-    electionID: ''
-  });
-
-  const [ballotData, setBallotData] = useState({
-    registeredVoters: { word: '', figure: '' },
-    accreditedVoters: { word: '', figure: '' },
-    issuedBallots: { word: '', figure: '' },
-    usedBallots: { word: '', figure: '' },
-    unusedBallots: { word: '', figure: '' },
-    spoiltBallots: { word: '', figure: '' },
-    ballotRangeStart: { word: '', figure: '' },
-    ballotRangeEnd: { word: '', figure: '' },
-    rejectedVotes: { word: '', figure: '' },
-    validVotes: { word: '', figure: '' },
-  });
-  
-  const [voteData, setVoteData] = useState([
-    { key: 'PA1', votesFig: '', votesWords: '' },
-    { key: 'PC1', votesFig: '', votesWords: '' },
-    { key: 'PD1', votesFig: '', votesWords: '' }
-  ]);
-
-  const [staffData, setStaffData] = useState({
-    staffName: '',
-    staffID: '',
-  });
-
-  const handleStaffInputChange = (field, value) => {
-    setStaffData(prevData => ({ ...prevData, [field]: value }));
-  };
-
-  function handleInputChange(dataType, key, subKey, value) {
-    if (dataType === "unitData") {
-      setUnitData(prevState => ({
-        ...prevState,
-        [key]: value
-      }));
-    } else if (dataType === "electionData") {
-      setElectionData(prevState => ({
-        ...prevState,
-        [key]: value
-      }));
-    } else if (dataType === "ballotData") {
-      setBallotData(prev => ({
-        ...prev,
-        [key]: { ...prev[key], [subKey]: value }
-      }));
-    } else if (dataType === "voteData") {
-      setVoteData(prev => {
-        const newData = [...prev];
-        const itemIndex = newData.findIndex(item => item.key === key);
-        if (itemIndex !== -1) {
-          newData[itemIndex][subKey] = value;
-        }
-        return newData;
-      });
+    let electionVotes = {voteTotal: 0, votesParties: []};
+    if (partyVotes1 && partyName1) {
+      electionVotes.voteTotal = parseInt(electionVotes.voteTotal) + parseInt(partyVotes2);
+      electionVotes.votesParties.push({"name": partyName1, "voteCount": partyVotes1});
+    } else {
+      alert("Invalid Form: A minimume of partyVote1 must be entered");
+      return;
     }
+
+    if (partyVotes2 && partyName2) {
+      electionVotes.voteTotal = parseInt(electionVotes.voteTotal) + parseInt(partyVotes2);
+      electionVotes.votesParties.push({"name": partyName2, "voteCount": partyVotes2});
+    }
+
+    if (partyVotes3 && partyName3) {
+      electionVotes.voteTotal = parseInt(electionVotes.voteTotal) + parseInt(partyVotes2);
+      electionVotes.votesParties.push({"name": partyName3, "voteCount": partyVotes3});
+    }
+
+    if (partyVotes4 && partyName4) {
+      electionVotes.voteTotal = parseInt(electionVotes.voteTotal) + parseInt(partyVotes2);
+      electionVotes.votesParties.push({"name": partyName4, "voteCount": partyVotes4});
+    }
+
+    alert('You are about to submit these resuts');
+    // const {partyName, numberOfVotes, pollingLocation, officialId}
+    const body = {electionPollingCentre, electionOfficerId, electionId, electionDate, electionWard, electionLga, electionState, electionFederal, electionVotes};
+    saveResult(body, 'udeze.cc@gmail.com')
+    .then(async res => {
+      const response = await res.json();
+      alert(`Form submition is successfully with the following response: ${JSON.stringify(response)}`);
+      setResults(response);
+      setIsTableView(true);
+    })
+    .catch(error => console.error(error));
   }
-  
-  function UnitComponent({ unitLabel, nameLabel, idLabel, nameData, idData, onChangeName, onChangeId }) {
+
+  if (isPreview && !isTableView) {
     return (
-      <Grid container spacing={2} alignItems="center">
-        <Grid item xs={12} sm={4} md={3}>
-          <Typography variant="h6" sx={{ margin: 2, fontWeight: 'bold' }}>{unitLabel}</Typography>
-        </Grid>
-        <Grid item xs={12} sm={6} md={7}>
-          <TextField fullWidth variant="outlined" label={nameLabel} value={nameData} onChange={e => onChangeName(e.target.value)} sx={{ marginBottom: 2 }} />
-        </Grid>
-        <Grid item xs={12} sm={2} md={2}>
-            <TextField fullWidth variant="outlined" label={idLabel} value={idData} onChange={e => onChangeId(e.target.value)} sx={{ marginBottom: 2 }} />
-        </Grid>
-      </Grid>
-    );
-  }
-
-  function ElectionComponent({ electionLabel, nameLabel, idLabel, nameData, idData, onChangeName, onChangeId }) {
-    return (
-      <Grid container spacing={2} alignItems="center">
-        <Grid item xs={12} sm={4} md={3}>
-          <Typography variant="h6" sx={{ margin: 2, fontWeight: 'bold' }}>{electionLabel}</Typography>
-        </Grid>
-        <Grid item xs={12} sm={6} md={7}>
-          <TextField fullWidth variant="outlined" label={nameLabel} value={nameData} onChange={e => onChangeName(e.target.value)} sx={{ marginBottom: 2 }} />
-        </Grid>
-        <Grid item xs={12} sm={2} md={2}>
-          <TextField fullWidth variant="outlined" label={idLabel} value={idData} onChange={e => onChangeId(e.target.value)} sx={{ marginBottom: 2 }} />
-        </Grid>
-      </Grid>
-    );
-  }
-
-
-  function BallotComponent({ description, wordLabel, figureLabel, wordData, figureData, onWordChange, onFigureChange }) {
-    return (
-      <Box sx={{ display: 'flex', alignItems: 'flex-start', flexDirection: 'row' }}>
-        <Grid container spacing={4}>
-          <Grid item xs={12} sm={4} md={3}>
-            <Typography variant="h6" sx={{ marginTop: 2, fontWeight: 'bold' }}>{description}</Typography> 
-          </Grid>
-          <Grid item xs={12} sm={6} md={7}>
-            <TextField
-              fullWidth
-              variant="outlined"
-              label={wordLabel}
-              value={wordData}
-              onChange={e => onWordChange(e.target.value)}
-              sx={{ marginBottom: 2 }}
-            />
-          </Grid>
-          <Grid item xs={12} sm={2} md={2}>
-            <TextField
-              fullWidth
-              variant="outlined"
-              label={figureLabel}
-              value={figureData}
-              onChange={e => onFigureChange(e.target.value)}
-              sx={{ marginBottom: 2 }}
-            />
-          </Grid>
-          </Grid>
-      </Box>
-    );
-  }
-
-  function VoteComponent({ partyName, partyID, votesFig, votesWords, onInputChange }) {
-    return (
-      <Box sx={{ display: 'flex', alignItems: 'flex-start', flexDirection: 'row', marginBottom: 2 }}>
-        <Grid container spacing={1}>
-          <Grid item xs={12} sm={6} md={2}>
-            <Typography variant="h6" sx={{ marginTop: 2, fontWeight: 'bold' }}>{partyName}</Typography>
-          </Grid>
-          <Grid item xs={12} sm={6} md={1}>
-            <Typography variant="h6" sx={{ marginTop: 2, fontWeight: 'bold' }}>{partyID}</Typography>         
-          </Grid>
-          <Grid item xs={12} sm={6} md={2}>
-            <TextField fullWidth variant="outlined" label="Votes in Fig" value={votesFig} onChange={e => onInputChange('votesFig', e.target.value)} />
-          </Grid>
-          <Grid item xs={12} sm={6} md={7}>
-            <TextField fullWidth variant="outlined" label="Votes in Words" value={votesWords} onChange={e => onInputChange('votesWords', e.target.value)} />
-          </Grid>
-        </Grid>
-      </Box>
-    );
-  }
-
-  function StaffComponent ({nameLabel, idLabel, nameData, idData, onChangeName, onChangeId }) {
-
-  }
-
-  if (isPreview) {
-    return (
-      <>
-        {/* Display your data, implement this based on your needs */}
-        <Box>{JSON.stringify(unitData)}</Box>
-        <Box>{JSON.stringify(ballotData)}</Box>
-        <Box>{JSON.stringify(voteData)}</Box>
-        <Box>{JSON.stringify(staffData)}</Box>
-
-        <Button variant="contained" color="secondary" onClick={handleBackClick}>
-          Back
-        </Button>
-
-        <Button variant="contained" color="primary" onClick={handleSubmit}>
-          Submit
-        </Button>
-      </>
-    );
-  } else {
-
-  return (
-    <>
-      <Box sx={{ m: 5, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <Typography variant="h4" gutterBottom sx={{ fontWeight: 'bold' }}>
-          Unit Result Submission Form
+  <>
+    <Box className='box'>
+      <Box className='resultform-header'>
+        <Typography variant="h5" gutterBottom className='result-header-typo'>
+          Unit Result Preview
         </Typography>
       </Box>
 
-      <Box sx={{ m: 2 }}>
-        <UnitComponent
-          unitLabel={unitDetail.unitLabel} 
-          nameLabel={unitDetail.nameLabel}
-          idLabel={unitDetail.idLabel}
-          nameData={unitData.unitName}
-          idData={unitData.unitID}
-          onChangeName={value => handleInputChange("unitData", "unitName", null, value)}
-          onChangeId={value => handleInputChange("unitData", "unitID", null, value)}
-        />
+      <Table size="small">
+          <TableBody>
+            <TableRow>
+              <TableCell colSpan={1}><Typography variant="h6" className="parties-cell">Election ID:</Typography></TableCell>
+              <TableCell colSpan={2} className="preview-cell">{electionId}</TableCell>                  
+            </TableRow>
+
+              {/* Row for Polling Centre */}
+              <TableRow>
+                <TableCell colSpan={1}><Typography variant="h6" className="parties-cell">Polling Centre:</Typography></TableCell>
+                <TableCell colSpan={2} className="preview-cell">{electionPollingCentre}</TableCell>                  
+              </TableRow>
+
+              {/* Row for Election Ward */}
+              <TableRow>
+                  <TableCell colSpan={1}><Typography variant="h6" className="parties-cell">Election Ward:</Typography></TableCell>
+                  <TableCell colSpan={2} className="preview-cell">{electionWard}</TableCell>                  
+              </TableRow>
+
+              {/* Row for Election LGA */}
+              <TableRow>
+                  <TableCell colSpan={1}><Typography variant="h6" className="parties-cell">Election LGA:</Typography></TableCell>
+                  <TableCell colSpan={2} className="preview-cell">{electionLga}</TableCell>                  
+              </TableRow>
+
+              {/* Row for State */}
+              <TableRow>
+                  <TableCell colSpan={1}><Typography variant="h6" className="parties-cell">State:</Typography></TableCell>
+                  <TableCell colSpan={2} className="preview-cell">{electionState}</TableCell>                  
+              </TableRow>
+
+              {/* Row for Country */}
+              <TableRow>
+                  <TableCell colSpan={1}><Typography variant="h6" className="parties-cell">Country:</Typography></TableCell>
+                  <TableCell colSpan={2} className="preview-cell">{electionFederal}</TableCell>                  
+              </TableRow>
+
+              {/* Row for OfficerID */}
+              <TableRow>
+                  <TableCell colSpan={1}><Typography variant="h6" className="parties-cell">OfficerID:</Typography></TableCell>
+                  <TableCell colSpan={2} className="preview-cell">{electionOfficerId}</TableCell>                  
+              </TableRow>
+
+              {/* Row for Election Date */}
+              <TableRow>
+                  <TableCell colSpan={1}><Typography variant="h6" className="parties-cell">Election Date:</Typography></TableCell>
+                  <TableCell colSpan={2} className="preview-cell">{electionDate}</TableCell>                  
+              </TableRow>
+
+              <TableRow>
+                <TableCell colSpan={3}><Typography variant="h6" className="parties-cell">Election Parties :</Typography></TableCell>
+              </TableRow>
+              {/* Rows for Election Parties */}
+              <TableRow>
+                <TableCell colSpan={1}><Typography variant="h6" className="election-parties">Party 1:</Typography></TableCell>
+                <TableCell colSpan={1} className="preview-cell">{partyName1}</TableCell>
+                <TableCell colSpan={1} className="preview-cell">{partyVotes1}</TableCell>
+              </TableRow>
+
+              <TableRow>
+                <TableCell colSpan={1}><Typography variant="h6" className="election-parties">Party 2:</Typography></TableCell>
+                <TableCell colSpan={1} className="preview-cell">{partyName2}</TableCell>
+                <TableCell colSpan={1} className="preview-cell">{partyVotes2}</TableCell> 
+              </TableRow>
+
+              <TableRow>
+                <TableCell colSpan={1}><Typography variant="h6" className="election-parties">Party 3:</Typography></TableCell>
+                <TableCell colSpan={1} className="preview-cell">{partyName3}</TableCell>
+                <TableCell colSpan={1} className="preview-cell">{partyVotes3}</TableCell>
+              </TableRow>
+              
+              <TableRow>
+                <TableCell colSpan={1}><Typography variant="h6" className="election-parties">Party 4:</Typography></TableCell>
+                <TableCell colSpan={1} className="preview-cell">{partyName4}</TableCell>
+                <TableCell colSpan={1} className="preview-cell">{partyVotes4}</TableCell>
+              </TableRow>
+
+          </TableBody>
+      </Table>
+
+      <Grid>
+        <Button className="view-result-button" variant="contained" style={previewButton} onClick={handleBackClick}>
+          Back
+        </Button>
+
+        <Button className="view-result-button" variant="contained" style={previewButton} onClick={handleSubmit}>
+          Submit
+        </Button>
+      </Grid>
+    </Box>
+</>
+  );
+  } else if (!isTableView) {
+  return (
+    <Box className='box'>
+      <Box className='resultform-header'>
+        <Typography variant="h4" gutterBottom className='result-header-typo'>
+          Unit Result Form
+        </Typography>
       </Box>
 
-      <Box sx={{ m: 2 }}>
-        <ElectionComponent
-          electionLabel={electionDetail.electionLabel} 
-          nameLabel={electionDetail.nameLabel}
-          idLabel={electionDetail.idLabel}
-          nameData={electionData.electionName}
-          idData={electionData.electionID}
-          onChangeName={value => handleInputChange("electionData", "electionName", null, value)}
-          onChangeId={value => handleInputChange("electionData", "electionID", null, value)}
-        />
-      </Box>
-
-        <Accordion sx={{ marginBottom: 2 }}>
-          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography variant="h5" sx={{ fontWeight: 'bold' }}>Expand Ballot Details</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-          {ballotDetail.map(detail => (
-            <BallotComponent
-              key={detail.key}
-              description={detail.description}
-              wordLabel={detail.wordLabel}
-              figureLabel={detail.figureLabel}
-              wordData={ballotData[detail.key].word}
-              figureData={ballotData[detail.key].figure}
-              onWordChange={(value) => handleInputChange("ballotData", detail.key, "word", value)}
-              onFigureChange={(value) => handleInputChange("ballotData", detail.key, "figure", value)}
-            />
-          ))}
-          </AccordionDetails>
-        </Accordion>
-
-        <Accordion sx={{ marginBottom: 2 }}>
-          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography variant="h5" sx={{ fontWeight: 'bold' }}>Votes Summary</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-          {voteDetail.map((detail, index) => (
-            <VoteComponent 
-              key={detail.key} 
-              partyName={detail.partyName}
-              partyID={detail.key}
-              votesFig={voteData[index].votesFig}
-              votesWords={voteData[index].votesWords}
-              onInputChange={(field, value) => handleInputChange("voteData", detail.key, field, value)}
-            />
-          ))}
-          </AccordionDetails>
-        </Accordion>
-
-        <Box>
-          <Box >
-            <Typography variant="h6" sx={{ margin: 2, fontWeight: 'bold' }}>Declaration</Typography>
-          </Box>
-
-        <Box display="flex" flexDirection="column" alignItems="center" mt={3} m={2}>
-          <Grid container spacing={1} alignItems="center">
-            <Grid item xs={12} sm={1}>
-              <Box>I</Box>
+      <Grid container>
+          <Grid item xs={6} md={6}>
+              <Typography variant="h6" className="result-input">Election ID :</Typography>
             </Grid>
-            <Grid item xs={12} sm={3}>
-              <Box mx={1}>
-                <TextField 
-                  variant="outlined"
-                  name="staffName" 
-                  id="staffName" 
-                  label="Polling Officer's Name" 
-                  required 
-                />
-              </Box>
-              </Grid>
-            <Grid item xs={12} sm={1}>
-              <Box>with staff ID</Box>
-            </Grid>
-            <Grid item xs={12} sm={3}>
-              <Box mx={1}>
-                <TextField 
-                  variant="outlined"
-                  name="staffID" 
-                  id="staffID" 
-                  label="Staff ID" 
-                  required 
-                />
-              </Box>
-            </Grid>
-            <Grid item xs={12} sm={1}>
-              <Box>today,</Box>
-            </Grid>
-            <Grid item xs={12} sm={3}>
-                <Box mx={1}>
-                    <TextField 
-                        variant="outlined"
-                        type="datetime-local" 
-                        name="electionDate" 
-                        id="electionDate" 
-                        label="Election Date" 
-                        InputLabelProps={{
-                          shrink: true,
-                        }}
-                        required 
-                    />
-                </Box>
-            </Grid>
-            <Grid item xs={12}>
-                <Box>hereby certify that the information contained in this form is a true and accurate account of votes cast in this polling unit. The election was CONTESTED/NOT CONTESTED.</Box>
-            </Grid>
+            <Grid item xs={6} md={6}>
+              <TextField id="ElectionID" fullWidth label="ElectionID" className="result-input" variant="outlined" value={electionId} onChange={e => setElectionID(e.target.value)} />
+          </Grid>
         </Grid>
 
-          <Box>
-            <Box m={3} >
-                <Button variant="contained" color="primary" onClick={handlePreviewClick}>
-                  Preview
-                </Button>
-            </Box>
-        </Box>
-      </Box>
+        <Grid container>
+          <Grid item xs={6} md={6}>
+            <Typography variant="h6" className="result-input">Polling Centre :</Typography>
+          </Grid>
+          <Grid item xs={6} md={6}>
+            <TextField id="pollingCentre" fullWidth className="result-input" label="Polling Centre" variant="outlined" value={electionPollingCentre} onChange={e => setPollingCentre(e.target.value)} />
+          </Grid>
+        </Grid>
+
+        <Grid container>
+          <Grid item xs={6} md={6}>
+            <Typography variant="h6" className="result-input">Election Ward :</Typography>
+          </Grid>
+          <Grid item xs={6} md={6}>
+            <TextField id="ward" fullWidth className="result-input" label="Ward" variant="outlined" value={electionWard} onChange={e => setElectionWard(e.target.value)}/>
+          </Grid>
+        </Grid>
+
+        <Grid container>
+          <Grid item xs={6} md={6}>
+            <Typography variant="h6" className="result-input">Election LGA :</Typography>
+          </Grid>
+          <Grid item xs={6} md={6}>
+            <TextField id="lga" fullWidth className="result-input" label="LGA" variant="outlined" value={electionLga} onChange={e => setElectionLga(e.target.value)}/>
+          </Grid>
+        </Grid>
+
+        <Grid container>
+          <Grid item xs={6} md={6}>
+            <Typography variant="h6" className="result-input">State :</Typography>
+          </Grid>
+          <Grid item xs={6} md={6}>
+            <TextField id="state" fullWidth className="result-input" label="State" variant="outlined" value={electionState} onChange={e => setElectionState(e.target.value)}/>
+          </Grid>
+        </Grid>
+
+        <Grid container>
+          <Grid item xs={6} md={6}>
+            <Typography variant="h6" className="result-input">Country :</Typography>
+          </Grid>
+          <Grid item xs={6} md={6}>
+            <TextField id="country" fullWidth className="result-input" label="Country" variant="outlined" value={electionFederal} onChange={e => setElectionFederal(e.target.value)}/>
+          </Grid>
+        </Grid>
+
+        <Grid container>
+          <Grid item xs={6} md={6}>
+            <Typography variant="h6" className="result-input">OfficerID :</Typography>
+          </Grid>
+          <Grid item xs={6} md={6}>
+            <TextField id="OfficerID" fullWidth className="result-input" label="OfficerID" variant="outlined" value={electionOfficerId} onChange={e => setOfficerID(e.target.value)}/>
+          </Grid>
+        </Grid>
+
+        <Grid container>
+          <Grid item xs={6} md={6}>
+            <Typography variant="h6" className="result-input">Election Date :</Typography>
+          </Grid>
+          <Grid item xs={6} md={6}>
+            <TextField id="ElectionDate" type="datetime-local" fullWidth className="result-input" variant="outlined" value={electionDate} onChange={e => setElectionDate(e.target.value)}/>
+          </Grid>
+        </Grid>
+
+        <Grid container>
+          <Grid item xs={6} md={6}>
+            <Typography variant="h6" className="result-input">Election Parties :</Typography>
+          </Grid>
+          <Grid container spacing={2}>
+            <Grid item xs={4} md={3} sm={3}>                
+              <Typography variant="h6" className="election-parties">Party 1 :</Typography>
+            </Grid>
+            <Grid item xs={4} md={5} sm={5} mb={2}>
+              <TextField id="partyName" fullWidth className="party-input" label="Party 1 Name" variant="outlined" value={partyName1} onChange={e => setPartyName1(e.target.value)} />
+            </Grid>
+            <Grid item xs={4} md={4} sm={4} mb={2}>
+              <TextField id="partyVotes" fullWidth className="party-input" label="Party 1 Votes" variant="outlined" value={partyVotes1} onChange={e => setPartyVotes1(e.target.value)} />
+            </Grid>
+          </Grid>
+          <Grid container spacing={2}>
+            <Grid item xs={4} md={3} sm={3} >                
+              <Typography variant="h6" className="election-parties">Party 2:</Typography>
+            </Grid>
+            <Grid item xs={4} md={5} sm={5}mb={2}>
+              <TextField id="partyName" fullWidth className="party-input" label="Party 2 Name" variant="outlined" value={partyName2} onChange={e => setPartyName2(e.target.value)} />
+            </Grid>
+            <Grid item xs={4} md={4} sm={4}mb={2}>
+              <TextField id="partyVotes" fullWidth className="party-input" label="Party 2 Votes" variant="outlined" value={partyVotes2} onChange={e => setPartyVotes2(e.target.value)} />
+            </Grid>
+          </Grid>
+          <Grid container spacing={2}>
+            <Grid item xs={4} md={3} sm={3}>                
+              <Typography variant="h6" className="election-parties">Party 3 :</Typography>
+            </Grid>
+            <Grid item xs={4} md={5} sm={5} mb={2}>
+              <TextField id="partyName" fullWidth className="party-input" label="Party 3 Name" variant="outlined" value={partyName3} onChange={e => setPartyName3(e.target.value)} />
+            </Grid>
+            <Grid item xs={4} md={4} sm={4} mb={2}>
+              <TextField id="partyVotes" fullWidth className="party-input" label="Party 3 Votes" variant="outlined" value={partyVotes3} onChange={e => setPartyVotes3(e.target.value)} />
+            </Grid>
+          </Grid>
+          <Grid container spacing={2}>
+            <Grid item xs={4} md={3} sm={3} >                
+              <Typography variant="h6" className="election-parties">Party 4 :</Typography>
+            </Grid>
+            <Grid item xs={4} md={5} sm={5} mb={2}>
+                <TextField id="partyName" fullWidth className="party-input" label="Party 4 Name" variant="outlined" value={partyName4} onChange={e => setPartyName4(e.target.value)} />
+            </Grid>
+            <Grid item xs={4} md={4} sm={4} mb={2}>
+                <TextField id="partyVotes" fullWidth className="party-input" label="Party 4 Votes" variant="outlined" value={partyVotes4} onChange={e => setPartyVotes4(e.target.value)} />
+            </Grid>
+        </Grid>
+      </Grid>
+
+        <Button style={previewButton} onClick={handlePreviewClick}>
+          Preview
+        </Button>
     </Box>
-    </>
   );
-}}
+} else if (isTableView) {
+  return (
+    <ResultTable results = {results}/>
+  )
+}
+
+}
 
 export default ResultForm;
+
+const previewButton = {
+  backgroundColor: "transparent",
+  color: "green",
+  textAlign: "center",
+  textDecoration: "none",
+  display: "inline-block",
+  fontSize: "16px",
+  borderRadius: "5px",
+  border: "1px solid green",
+  margin: "1.0em",
+}
