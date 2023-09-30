@@ -91,7 +91,7 @@ function AllResultsTable(props) {
                     >
                         <CartesianGrid stroke="#f5f5f5" />
                         <XAxis type="number" tick={{ fontWeight: 'bold' }} />
-                        <YAxis dataKey="name" type="category" scale="band" tick={{ fontWeight: 'bold' }} />
+                        <YAxis dataKey="name" type="category" tick={{ fontWeight: 'bold' }} />
                         <Legend fontWeight={900}/>
                         <Bar 
                             dataKey="voteCount" 

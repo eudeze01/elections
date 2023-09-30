@@ -89,7 +89,7 @@ function ResultForm() {
     saveResult(body, 'udeze.cc@gmail.com')
     .then(async res => {
       const response = await res.json();
-      alert(`Form submition is successfully with the following response: ${JSON.stringify(response)}`);
+      alert(`Form submission is successfully with the following response: ${JSON.stringify(response)}`);
       setResults(response);
       setIsTableView(true);
     })
