@@ -110,7 +110,7 @@ function AllResultsTable(props) {
 }
 
 const BASE_URL = 'https://9656mgkl5a.execute-api.eu-west-2.amazonaws.com/dev/fetch/document';
-const pollingCenters = [ 'City Centre', 'Secretariat', 'Waterside', 'Market Square' ];
+const pollingCenters = [ 'City Centre', 'Secretariat', 'Waterside', 'Market Square', 'Victoria Street'];
 
 const getPollingCentres = async () => {
     const response = await fetch(`${BASE_URL}/ElectionResults`);
