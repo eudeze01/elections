@@ -3,11 +3,15 @@ import SearchIcon from '@mui/icons-material/Search';
 import React from 'react';
 import { ComposedChart, ReferenceLine, Bar, LabelList, Legend, XAxis, YAxis, CartesianGrid } from 'recharts';
 import './App.css';
+import { BASE_URL } from './constants';
+import QRCode from "react-qr-code";
 
 function AllResultsTable(props) {
     if (!props.data || Object.keys(props.data).length === 0) {
         return null; 
     }
+
+    const qrValue = `${BASE_URL}/${props.data.electionResultKey}`;
 
     const attributeToLabelMapping = {
         "electionResultKey": "Result ID",
@@ -46,7 +50,8 @@ function AllResultsTable(props) {
     ];
 
     return (
-        <Box>
+        <Box className='box container-relative'>
+            <QRCode className="qrcode-top-right" value={qrValue} size={100} level={"Q"}/>
             <Box className='resultform-header'>
                 <Typography variant="h5" align='center' gutterBottom className="result-header-typo">
                     Result Page                
@@ -109,7 +114,6 @@ function AllResultsTable(props) {
     );
 }
 
-const BASE_URL = 'https://9656mgkl5a.execute-api.eu-west-2.amazonaws.com/dev/fetch/document';
 const pollingCenters = [ 'City Centre', 'Secretariat', 'Waterside', 'Market Square', 'Victoria Street'];
 
 const getPollingCentres = async () => {

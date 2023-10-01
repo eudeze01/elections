@@ -1,18 +1,24 @@
 import { Table, Box, TableBody, TableCell, TableRow, Typography } from '@mui/material';
+import QRCode from "react-qr-code";
+import { BASE_URL } from './constants';
 
 function ResultTable(props) {
-    const { electionPollingCentre, electionOfficerId, electionId, electionDate, electionWard, electionLga,
+    const { electionResultKey, electionPollingCentre, electionOfficerId, electionId, electionDate, electionWard, electionLga,
         electionState, electionFederal, partyVotes1, partyName1, partyVotes2, partyName2,
         partyVotes3, partyName3, partyVotes4, partyName4
     } = props.results ? props.results : {};
+
+    const qrValue = `${BASE_URL}/${electionResultKey}`;
+
     return (
         <>
-        <Box className='box'>
-            <Box className='resultform-header'>
-                <Typography variant="h5" gutterBottom className='result-header-typo'>
-                Unit Result
-                </Typography>
-            </Box>
+            <Box className='box container-relative'>
+                <QRCode className="qrcode-top-right" value={qrValue} size={100} level={"Q"}/>
+                <Box className='resultform-header'>
+                    <Typography variant="h5" align='center' gutterBottom className="result-header-typo">
+                        Unit Result
+                    </Typography>
+                </Box>
 
             <Table size="small">
                 <TableBody>

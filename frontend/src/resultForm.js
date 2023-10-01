@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import {Grid, Button, Typography, TextField, Box, Table, TableBody, TableRow, TableCell }  from '@mui/material';
 import './App.css';
 import ResultTable from './table';
+import QRCode from "react-qr-code";
 
 const saveResult = async (body = {}, admin) => {
   const myHeaders = new Headers();
@@ -39,6 +40,8 @@ function ResultForm() {
   const [isPreview, setIsPreview] = useState(false);
   const [isTableView, setIsTableView] = useState(false);
   const [results, setResults] = useState({});
+  const [qrValue, setQrValue] = useState('');
+  const [showQR, setShowQR] = useState(false);
   
   const handlePreviewClick = () => {
     setIsPreview(true);
@@ -64,7 +67,7 @@ function ResultForm() {
       electionVotes.voteTotal = parseInt(electionVotes.voteTotal) + parseInt(partyVotes2);
       electionVotes.votesParties.push({"name": partyName1, "voteCount": partyVotes1});
     } else {
-      alert("Invalid Form: A minimume of partyVote1 must be entered");
+      alert("Invalid Form: A minimum of partyVote1 must be entered");
       return;
     }
 
@@ -91,6 +94,12 @@ function ResultForm() {
       const response = await res.json();
       alert(`Form submission is successfully with the following response: ${JSON.stringify(response)}`);
       setResults(response);
+
+      const apiUrl = `https://9656mgkl5a.execute-api.eu-west-2.amazonaws.com/dev/fetch/document/ElectionResults/${response.electionResultKey}`;
+      setQrValue(apiUrl);
+
+      setShowQR(true);
+
       setIsTableView(true);
     })
     .catch(error => console.error(error));
@@ -103,6 +112,7 @@ function ResultForm() {
       <Box className='resultform-header'>
         <Typography variant="h5" gutterBottom className='result-header-typo'>
           Unit Result Preview
+          {showQR && <QRCode className="qrcode-top-right" value={qrValue} size={80} level={"Q"}/>}
         </Typography>
       </Box>
 
@@ -204,6 +214,7 @@ function ResultForm() {
       <Box className='resultform-header'>
         <Typography variant="h4" gutterBottom className='result-header-typo'>
           Unit Result Form
+           {showQR && <QRCode className="qrcode-top-right" value={qrValue} size={80} level={"Q"}/>}
         </Typography>
       </Box>
 
@@ -345,8 +356,8 @@ function ResultForm() {
 export default ResultForm;
 
 const previewButton = {
-  backgroundColor: "transparent",
-  color: "green",
+  backgroundColor: "green",
+  color: "white",
   textAlign: "center",
   textDecoration: "none",
   display: "inline-block",
@@ -354,4 +365,5 @@ const previewButton = {
   borderRadius: "5px",
   border: "1px solid green",
   margin: "1.0em",
+  width: "200px",
 }
