@@ -18,7 +18,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
-// import ManageElection from './screens/admin/manageElection';
+import ManageElection from './screens/admin/manageElection';
 // import ManageStaff from './screens/admin/manageStaff'
 // import ManageParty from './screens/admin/manageParty'
 // import ManageUnit from './screens/admin/manageUnit';
@@ -95,12 +95,12 @@ function AdminPage() {
 
     const renderSelectedComponent = () => {
         switch (selectedComponent) {
-            // case 'ManageElection':
-            //     return (
-            //         <SnackbarProvider>
-            //             <ManageElection />
-            //         </SnackbarProvider>
-            //     );
+            case 'ManageElection':
+                return (
+                    <SnackbarProvider>
+                        <ManageElection />
+                    </SnackbarProvider>
+                );
             // case 'ManageParty':
             //     return (
             //         <SnackbarProvider>
@@ -224,7 +224,7 @@ function AdminPage() {
                     // { name: 'Manage Staff', component: 'ManageStaff' },
                     // { name: 'Manage Agent', component: 'ManageAgent' },
                     // { name: 'Manage Unit', component: 'ManageUnit' },
-                    // { name: 'Staff Page', component: 'StaffPage' },
+                    { name: 'Staff Page', component: 'StaffPage' },
                     // { name: 'Manage Ballot', component: 'ManageBallot' },
                     // { name: 'Manage Result Form', component: 'ManageResultForm' },
                     // { name: 'Manage Result', component: 'ManageResult' },

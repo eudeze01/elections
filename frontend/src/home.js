@@ -114,7 +114,8 @@ function AllResultsTable(props) {
     );
 }
 
-const pollingCenters = [ 'City Centre', 'Secretariat', 'Waterside', 'Market Square', 'Victoria Street'];
+const pollingCenters = [ 'City Centre', 'Secretariat', 'Waterside', 'Market Square', 'Victoria Street', 'Aba Hall',
+'Birkbeck University', 'City of London', 'Angel Islington', 'Central London',];
 
 const getPollingCentres = async () => {
     const response = await fetch(`${BASE_URL}/ElectionResults`);
